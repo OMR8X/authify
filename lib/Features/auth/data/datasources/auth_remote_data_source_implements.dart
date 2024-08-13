@@ -7,9 +7,10 @@ import 'package:auhtify/Features/auth/domain/requests/sign_up_request.dart';
 import 'package:auhtify/Features/auth/domain/requests/update_user_data_request.dart';
 import 'package:auhtify/core/services/api/api_client.dart';
 import 'package:auhtify/core/services/api/api_constants.dart';
-import 'package:auhtify/core/services/errors/exceptions.dart';
+import 'package:auhtify/core/resources/errors/exceptions.dart';
 
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'auth_data_source.dart';
 
 class AuthRemoteDataSourceImplements implements AuthDataSource {
@@ -25,12 +26,18 @@ class AuthRemoteDataSourceImplements implements AuthDataSource {
     final response = await client.post(ApiUris.signIn, request.toJson());
     //
     if (response.statusCode == 200) {
-      final data = response.data;
-      final user = UserDataModel.fromJson(data);
+      //
+      final json = response.data;
+      //
+      if (json["error"] != null) {
+        throw AuthException(message: json["error"]);
+      }
+      //
+      final user = UserDataModel.fromJson(json["data"]);
+      //
       return user;
     }
     //
-    // TODO: handle different type of exceptions
     throw const ServerException();
   }
 
@@ -42,10 +49,17 @@ class AuthRemoteDataSourceImplements implements AuthDataSource {
     final response = await client.post(ApiUris.signIn, request.toJson());
     //
     if (response.statusCode == 200) {
+      //
+      final json = response.data;
+      //
+      if (json["error"] != null) {
+        throw AuthException(message: json["error"]);
+      }
       return unit;
     }
     //
-    // TODO: handle different type of exceptions
+
+    //
     throw const ServerException();
   }
 
@@ -57,12 +71,18 @@ class AuthRemoteDataSourceImplements implements AuthDataSource {
     final response = await client.post(ApiUris.signIn, request.toJson());
     //
     if (response.statusCode == 200) {
-      final data = response.data;
-      final user = UserDataModel.fromJson(data);
+      //
+      final json = response.data;
+      //
+      if (json["error"] != null) {
+        throw AuthException(message: json["error"]);
+      }
+      //
+      final user = UserDataModel.fromJson(json["data"]);
+      //
       return user;
     }
     //
-    // TODO: handle different type of exceptions
     throw const ServerException();
   }
 
@@ -74,12 +94,18 @@ class AuthRemoteDataSourceImplements implements AuthDataSource {
     final response = await client.post(ApiUris.signIn, request.toJson());
     //
     if (response.statusCode == 200) {
-      final data = response.data;
-      final user = UserDataModel.fromJson(data);
+      //
+      final json = response.data;
+      //
+      if (json["error"] != null) {
+        throw AuthException(message: json["error"]);
+      }
+      //
+      final user = UserDataModel.fromJson(json["data"]);
+      //
       return user;
     }
     //
-    // TODO: handle different type of exceptions
     throw const ServerException();
   }
 
@@ -91,12 +117,18 @@ class AuthRemoteDataSourceImplements implements AuthDataSource {
     final response = await client.post(ApiUris.signIn, request.toJson());
     //
     if (response.statusCode == 200) {
-      final data = response.data;
-      final user = UserDataModel.fromJson(data);
+      //
+      final json = response.data;
+      //
+      if (json["error"] != null) {
+        throw AuthException(message: json["error"]);
+      }
+      //
+      final user = UserDataModel.fromJson(json["data"]);
+      //
       return user;
     }
     //
-    // TODO: handle different type of exceptions
     throw const ServerException();
   }
 }

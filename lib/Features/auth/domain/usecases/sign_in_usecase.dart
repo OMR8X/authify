@@ -1,6 +1,6 @@
 import 'package:auhtify/Features/auth/domain/entites/user_data.dart';
 
-import '../../../../core/services/errors/failures.dart';
+import '../../../../core/resources/errors/failures.dart';
 import '../repositories/auth_repository.dart';
 import '../requests/sign_in_request.dart';
 

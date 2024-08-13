@@ -4,7 +4,7 @@ import 'package:auhtify/Features/auth/domain/requests/forget_password_request.da
 import 'package:auhtify/Features/auth/domain/requests/sign_in_request.dart';
 import 'package:auhtify/Features/auth/domain/requests/sign_up_request.dart';
 import 'package:auhtify/Features/auth/domain/requests/update_user_data_request.dart';
-import 'package:auhtify/core/services/errors/failures.dart';
+import 'package:auhtify/core/resources/errors/failures.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class AuthRepository {
