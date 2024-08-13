@@ -9,23 +9,23 @@ import 'package:dartz/dartz.dart';
 
 abstract class AuthRepository {
   // change user password
-  Future<Either<AppFailure, UserData>> changePassword({
+  Future<Either<Failure, UserData>> changePassword({
     required ChangePasswordRequest request,
   });
   // send code to user via email to reset password.
-  Future<Either<AppFailure, Unit>> forgetPassword({
+  Future<Either<Failure, Unit>> forgetPassword({
     required ForgetPasswordRequest request,
   });
   // signing in
-  Future<Either<AppFailure, UserData>> signIn({
+  Future<Either<Failure, UserData>> signIn({
     required SignInRequest request,
   });
   // signing up
-  Future<Either<AppFailure, UserData>> signUp({
+  Future<Either<Failure, UserData>> signUp({
     required SignUpRequest request,
   });
   // update user data
-  Future<Either<AppFailure, UserData>> updateUserData({
+  Future<Either<Failure, UserData>> updateUserData({
     required UpdateUserDataRequest request,
   });
 }

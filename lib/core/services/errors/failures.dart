@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 
-class AppFailure extends Equatable {
+class Failure extends Equatable {
   final String code;
   final String message;
 
-  const AppFailure({required this.code, required this.message});
+  const Failure({required this.code, required this.message});
 
   @override
   List<Object?> get props => [code, message];
@@ -14,14 +14,14 @@ class AppFailure extends Equatable {
   }
 }
 
-class AnonFailure extends AppFailure {
+class AnonFailure extends Failure {
   static const String _code = "";
   static const String _message = "Anon Failure";
 
   const AnonFailure() : super(message: _message, code: _code);
 }
 
-class NoInternetFailure extends AppFailure {
+class NoInternetFailure extends Failure {
   static const String _code = "";
   static const String _message = "No internet connection";
 

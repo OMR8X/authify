@@ -11,7 +11,7 @@ class SignInUsecase {
 
   SignInUsecase({required this.repository});
 
-  Future<Either<AppFailure, UserData>> call({required SignInRequest request}) {
+  Future<Either<Failure, UserData>> call({required SignInRequest request}) {
     return repository.signIn(request: request);
   }
 }

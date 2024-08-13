@@ -1,1 +1,5 @@
-class ChangePasswordRequest {}
+class ChangePasswordRequest {
+  Map<String, dynamic> toJson() {
+    return {};
+  }
+}

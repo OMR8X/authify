@@ -1,7 +1,11 @@
-
 class ApiSettings {
-  static const timeOut = 15;
+  //
+  static const receiveTimeout = 15;
+  static const sendTimeout = 15;
+  static const connectTimeout = 15;
+  //
   static const baseUrl = 'https://huldrs.com';
+  //
 }
 
 class ApiHeaders {
@@ -11,45 +15,17 @@ class ApiHeaders {
   static const headerAcceptKey = 'accept';
   static const headerApiKey = 'api-key';
   // values
-  static const headerValueApplicationJson = 'application/json';
-  static const headerValueApplicationForm = 'application/x-www-form-urlencoded';
-  static const headerValueApplicationText = 'text/html';
+  static const headerContentTypeJson = 'application/json';
+  static const headerAuthorizationBarer = 'barer';
 }
 
 class ApiUris {
   /// base url
 
-  /// search uri
-  static String searchUri(String keyword) => '/api/search/?q=$keyword';
-
-  /// section uri
-  static const getMainSectionsUri = '/api/sections';
-  static String getSectionItemsUri(String id) => '/api/sections/$id';
-  static String getSectionFileUri(String id) => '/api/file/$id';
-
-  /// playlist uri
-  static const getMainPlaylistsUri = '/api/playlists';
-  static String getPlaylistItemsUri(String id) => '/api/playlists/$id';
-  static String getVideoUri(String id) => '/api/video/$id';
-
-  /// Genre uri
-  static const getMainGenresUri = '/api/genres';
-  static String getGenreItemsUri(String id) => '/api/genres/$id';
-  static String getGameUri(String id) => '/api/game/$id';
-
-  /// binder uri
-  static const getMainBindersUri = '/api/binders';
-  static String getBinderItemsUri(String id) => '/api/binders/$id';
-  static String getWorksheetUri(String id) => '/api/worksheet/$id';
-
-  /// test uri
-  static const getMainTestCategoriesUri = '/api/tests';
-  static String getTestCategoryItemsUri(String id) => '/api/tests/$id';
-  static String getTestUri(String id) => '/api/test/$id';
-
-  /// student test uri
-  static String getStudentTestCategoryUri(String id) =>
-      '/api/tests-categories/$id';
-
-  static String getStudentTestUri = '/api/create-student-test';
+  /// sign in
+  static String get signIn => '/api/sign-in';
+  static String get signUp => '/api/sign-in';
+  static String get signOut => '/api/sign-in';
+  static String get changePassword => '/api/change-password';
+  static String get forgetPassword => '/api/forget-password';
 }

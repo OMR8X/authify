@@ -18,7 +18,7 @@ class AuthRepositoryImplement implements AuthRepository {
   });
 
   @override
-  Future<Either<AppFailure, UserData>> changePassword({
+  Future<Either<Failure, UserData>> changePassword({
     required ChangePasswordRequest request,
   }) async {
     //
@@ -34,28 +34,28 @@ class AuthRepositoryImplement implements AuthRepository {
   }
 
   @override
-  Future<Either<AppFailure, Unit>> forgetPassword({
+  Future<Either<Failure, Unit>> forgetPassword({
     required ForgetPasswordRequest request,
   }) async {
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<AppFailure, UserData>> signIn({
+  Future<Either<Failure, UserData>> signIn({
     required SignInRequest request,
   }) async {
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<AppFailure, UserData>> signUp({
+  Future<Either<Failure, UserData>> signUp({
     required SignUpRequest request,
   }) async {
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<AppFailure, UserData>> updateUserData({
+  Future<Either<Failure, UserData>> updateUserData({
     required UpdateUserDataRequest request,
   }) async {
     throw UnimplementedError();
