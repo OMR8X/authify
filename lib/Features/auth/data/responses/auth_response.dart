@@ -1,6 +1,9 @@
+import 'package:auhtify/core/resources/errors/exceptions.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
 class AuthResponse {
+  //
   final bool status;
   // hold response message
   final String message;
@@ -18,6 +21,13 @@ class AuthResponse {
 
   bool get hasError {
     return errors?.isNotEmpty ?? false;
+  }
+
+  Map<String, dynamic> getData({required String key}) {
+    if (data?[key] == null) {
+      throw const ServerException();
+    }
+    return data?[key] ?? {};
   }
 
   factory AuthResponse.fromDioResponse(Response response) {

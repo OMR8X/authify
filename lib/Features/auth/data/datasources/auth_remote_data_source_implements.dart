@@ -36,7 +36,9 @@ class AuthRemoteDataSourceImplements implements AuthDataSource {
     //
     if (dioResponse.statusCode == 200) {
       //
-      final user = UserDataModel.fromJson(response.data!["user"]);
+      final user = UserDataModel.fromJson(
+        response.getData(key: "user"),
+      );
       //
       return user;
     }
@@ -85,7 +87,9 @@ class AuthRemoteDataSourceImplements implements AuthDataSource {
     //
     if (dioResponse.statusCode == 200) {
       //
-      final user = UserDataModel.fromJson(response.data!["user"]);
+      final user = UserDataModel.fromJson(
+        response.getData(key: "user"),
+      );
       //
       return user;
     }
@@ -111,7 +115,9 @@ class AuthRemoteDataSourceImplements implements AuthDataSource {
     //
     if (dioResponse.statusCode == 200) {
       //
-      final user = UserDataModel.fromJson(response.data!["user"]);
+      final user = UserDataModel.fromJson(
+        response.getData(key: "user"),
+      );
       //
       return user;
     }
@@ -134,7 +140,9 @@ class AuthRemoteDataSourceImplements implements AuthDataSource {
     //
     if (dioResponse.statusCode == 200) {
       //
-      final user = UserDataModel.fromJson(response.data!["user"]);
+      final user = UserDataModel.fromJson(
+        response.getData(key: "user"),
+      );
       //
       return user;
     }
