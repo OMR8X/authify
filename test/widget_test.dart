@@ -5,26 +5,24 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:auhtify/Features/auth/data/datasources/auth_remote_data_source_implements.dart';
+import 'package:auhtify/Features/auth/domain/requests/sign_up_request.dart';
+import 'package:auhtify/core/resources/errors/exceptions.dart';
+import 'package:auhtify/core/services/api/api_client.dart';
 
-import 'package:auhtify/main.dart';
-
-void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const AuthifyApp());
-
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
-  });
+void main() async {
+  //
+  final client = DioClient();
+  //
+  final dataSource = AuthRemoteDataSourceImplements(client: client);
+  //
+  try {
+    await dataSource.signUp(
+      request: SignUpRequest(
+        name: "name",
+        email: "testing.6@gmail.com",
+        password: "12345678",
+      ),
+    );
+  } on Exception catch (e) {}
 }

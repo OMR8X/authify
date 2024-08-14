@@ -4,7 +4,7 @@ class ApiSettings {
   static const sendTimeout = 15;
   static const connectTimeout = 15;
   //
-  static const baseUrl = 'https://huldrs.com';
+  static const baseUrl = 'https://authify.omr8x.com';
   //
 }
 
@@ -20,12 +20,10 @@ class ApiHeaders {
 }
 
 class ApiUris {
-  /// base url
-
-  /// sign in
-  static String get signIn => '/api/sign-in';
-  static String get signUp => '/api/sign-in';
-  static String get signOut => '/api/sign-in';
-  static String get changePassword => '/api/change-password';
-  static String get forgetPassword => '/api/forget-password';
+  /// auth urls
+  static String get signIn => '/api/auth/sign-in';
+  static String get signUp => '/api/auth/sign-up';
+  static String get signOut => '/api/auth/sign-out';
+  static String get changePassword => '/api/auth/change-password';
+  static String get forgetPassword => '/api/auth/forget-password';
 }

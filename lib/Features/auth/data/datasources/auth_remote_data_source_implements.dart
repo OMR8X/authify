@@ -1,4 +1,5 @@
 import 'package:auhtify/Features/auth/data/models/user_data_model.dart';
+import 'package:auhtify/Features/auth/data/responses/auth_response.dart';
 import 'package:auhtify/Features/auth/domain/entites/user_data.dart';
 import 'package:auhtify/Features/auth/domain/requests/change_password_request.dart';
 import 'package:auhtify/Features/auth/domain/requests/forget_password_request.dart';
@@ -22,17 +23,19 @@ class AuthRemoteDataSourceImplements implements AuthDataSource {
     required ChangePasswordRequest request,
   }) async {
     //
-    final response =
-        await client.post(ApiUris.changePassword, request.toJson());
+    final dioResponse = await client.post(
+      ApiUris.changePassword,
+      request.toJson(),
+    );
     //
-    if (response.statusCode == 200) {
+    if (dioResponse.statusCode == 200) {
       //
-      final json = response.data;
-      if (json["error"] != null) {
-        throw AuthException(message: json["error"]);
+      AuthResponse response = AuthResponse.fromDioResponse(dioResponse);
+      if (response.hasError) {
+        throw AuthException(message: response.message);
       }
       //
-      final user = UserDataModel.fromJson(json["data"]);
+      final user = UserDataModel.fromJson(response.data!["user"]);
       //
       return user;
     }
@@ -45,15 +48,17 @@ class AuthRemoteDataSourceImplements implements AuthDataSource {
     required ForgetPasswordRequest request,
   }) async {
     //
-    final response =
-        await client.post(ApiUris.forgetPassword, request.toJson());
+    final dioResponse = await client.post(
+      ApiUris.forgetPassword,
+      request.toJson(),
+    );
     //
-    if (response.statusCode == 200) {
+    if (dioResponse.statusCode == 200) {
       //
-      final json = response.data;
+      AuthResponse response = AuthResponse.fromDioResponse(dioResponse);
       //
-      if (json["error"] != null) {
-        throw AuthException(message: json["error"]);
+      if (response.hasError) {
+        throw AuthException(message: response.message);
       }
       return unit;
     }
@@ -67,17 +72,20 @@ class AuthRemoteDataSourceImplements implements AuthDataSource {
     required SignInRequest request,
   }) async {
     //
-    final response = await client.post(ApiUris.signIn, request.toJson());
+    final dioResponse = await client.post(
+      ApiUris.signIn,
+      request.toJson(),
+    );
     //
-    if (response.statusCode == 200) {
+    if (dioResponse.statusCode == 200) {
       //
-      final json = response.data;
+      AuthResponse response = AuthResponse.fromDioResponse(dioResponse);
       //
-      if (json["error"] != null) {
-        throw AuthException(message: json["error"]);
+      if (response.hasError) {
+        throw AuthException(message: response.message);
       }
       //
-      final user = UserDataModel.fromJson(json["data"]);
+      final user = UserDataModel.fromJson(response.data!["user"]);
       //
       return user;
     }
@@ -90,17 +98,20 @@ class AuthRemoteDataSourceImplements implements AuthDataSource {
     required SignUpRequest request,
   }) async {
     //
-    final response = await client.post(ApiUris.signUp, request.toJson());
+    final dioResponse = await client.post(
+      ApiUris.signUp,
+      request.toJson(),
+    );
     //
-    if (response.statusCode == 200) {
+    AuthResponse response = AuthResponse.fromDioResponse(dioResponse);
+    //
+    if (response.hasError) {
+      throw AuthException(message: response.message);
+    }
+    //
+    if (dioResponse.statusCode == 200) {
       //
-      final json = response.data;
-      //
-      if (json["error"] != null) {
-        throw AuthException(message: json["error"]);
-      }
-      //
-      final user = UserDataModel.fromJson(json["data"]);
+      final user = UserDataModel.fromJson(response.data!["user"]);
       //
       return user;
     }
@@ -113,17 +124,17 @@ class AuthRemoteDataSourceImplements implements AuthDataSource {
     required UpdateUserDataRequest request,
   }) async {
     //
-    final response = await client.post(ApiUris.signIn, request.toJson());
+    final dioResponse = await client.post(ApiUris.signIn, request.toJson());
     //
-    if (response.statusCode == 200) {
+    if (dioResponse.statusCode == 200) {
       //
-      final json = response.data;
+      AuthResponse response = AuthResponse.fromDioResponse(dioResponse);
       //
-      if (json["error"] != null) {
-        throw AuthException(message: json["error"]);
+      if (response.hasError) {
+        throw AuthException(message: response.message);
       }
       //
-      final user = UserDataModel.fromJson(json["data"]);
+      final user = UserDataModel.fromJson(response.data!["user"]);
       //
       return user;
     }
