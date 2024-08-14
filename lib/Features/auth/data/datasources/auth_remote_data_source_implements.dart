@@ -10,7 +10,6 @@ import 'package:auhtify/core/services/api/api_constants.dart';
 import 'package:auhtify/core/resources/errors/exceptions.dart';
 
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'auth_data_source.dart';
 
 class AuthRemoteDataSourceImplements implements AuthDataSource {
@@ -23,12 +22,12 @@ class AuthRemoteDataSourceImplements implements AuthDataSource {
     required ChangePasswordRequest request,
   }) async {
     //
-    final response = await client.post(ApiUris.signIn, request.toJson());
+    final response =
+        await client.post(ApiUris.changePassword, request.toJson());
     //
     if (response.statusCode == 200) {
       //
       final json = response.data;
-      //
       if (json["error"] != null) {
         throw AuthException(message: json["error"]);
       }
@@ -46,7 +45,8 @@ class AuthRemoteDataSourceImplements implements AuthDataSource {
     required ForgetPasswordRequest request,
   }) async {
     //
-    final response = await client.post(ApiUris.signIn, request.toJson());
+    final response =
+        await client.post(ApiUris.forgetPassword, request.toJson());
     //
     if (response.statusCode == 200) {
       //
@@ -58,7 +58,6 @@ class AuthRemoteDataSourceImplements implements AuthDataSource {
       return unit;
     }
     //
-
     //
     throw const ServerException();
   }
@@ -91,7 +90,7 @@ class AuthRemoteDataSourceImplements implements AuthDataSource {
     required SignUpRequest request,
   }) async {
     //
-    final response = await client.post(ApiUris.signIn, request.toJson());
+    final response = await client.post(ApiUris.signUp, request.toJson());
     //
     if (response.statusCode == 200) {
       //
