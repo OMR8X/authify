@@ -28,12 +28,13 @@ class AuthRemoteDataSourceImplements implements AuthDataSource {
       request.toJson(),
     );
     //
+    AuthResponse response = AuthResponse.fromDioResponse(dioResponse);
+    //
+    if (response.hasError) {
+      throw AuthException(message: response.message);
+    }
+    //
     if (dioResponse.statusCode == 200) {
-      //
-      AuthResponse response = AuthResponse.fromDioResponse(dioResponse);
-      if (response.hasError) {
-        throw AuthException(message: response.message);
-      }
       //
       final user = UserDataModel.fromJson(response.data!["user"]);
       //
@@ -53,16 +54,15 @@ class AuthRemoteDataSourceImplements implements AuthDataSource {
       request.toJson(),
     );
     //
-    if (dioResponse.statusCode == 200) {
-      //
-      AuthResponse response = AuthResponse.fromDioResponse(dioResponse);
-      //
-      if (response.hasError) {
-        throw AuthException(message: response.message);
-      }
-      return unit;
+    AuthResponse response = AuthResponse.fromDioResponse(dioResponse);
+    //
+    if (response.hasError) {
+      throw AuthException(message: response.message);
     }
     //
+    if (dioResponse.statusCode == 200) {
+      return unit;
+    }
     //
     throw const ServerException();
   }
@@ -77,13 +77,13 @@ class AuthRemoteDataSourceImplements implements AuthDataSource {
       request.toJson(),
     );
     //
+    AuthResponse response = AuthResponse.fromDioResponse(dioResponse);
+    //
+    if (response.hasError) {
+      throw AuthException(message: response.message);
+    }
+    //
     if (dioResponse.statusCode == 200) {
-      //
-      AuthResponse response = AuthResponse.fromDioResponse(dioResponse);
-      //
-      if (response.hasError) {
-        throw AuthException(message: response.message);
-      }
       //
       final user = UserDataModel.fromJson(response.data!["user"]);
       //
@@ -126,13 +126,13 @@ class AuthRemoteDataSourceImplements implements AuthDataSource {
     //
     final dioResponse = await client.post(ApiUris.signIn, request.toJson());
     //
+    AuthResponse response = AuthResponse.fromDioResponse(dioResponse);
+    //
+    if (response.hasError) {
+      throw AuthException(message: response.message);
+    }
+    //
     if (dioResponse.statusCode == 200) {
-      //
-      AuthResponse response = AuthResponse.fromDioResponse(dioResponse);
-      //
-      if (response.hasError) {
-        throw AuthException(message: response.message);
-      }
       //
       final user = UserDataModel.fromJson(response.data!["user"]);
       //

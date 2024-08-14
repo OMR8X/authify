@@ -7,7 +7,6 @@
 
 import 'package:auhtify/Features/auth/data/datasources/auth_remote_data_source_implements.dart';
 import 'package:auhtify/Features/auth/domain/requests/sign_up_request.dart';
-import 'package:auhtify/core/resources/errors/exceptions.dart';
 import 'package:auhtify/core/services/api/api_client.dart';
 
 void main() async {
