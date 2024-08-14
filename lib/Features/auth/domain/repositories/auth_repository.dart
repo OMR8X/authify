@@ -5,6 +5,7 @@ import 'package:auhtify/Features/auth/domain/requests/sign_in_request.dart';
 import 'package:auhtify/Features/auth/domain/requests/sign_up_request.dart';
 import 'package:auhtify/Features/auth/domain/requests/update_user_data_request.dart';
 import 'package:auhtify/core/resources/errors/failures.dart';
+
 import 'package:dartz/dartz.dart';
 
 abstract class AuthRepository {
@@ -28,4 +29,5 @@ abstract class AuthRepository {
   Future<Either<Failure, UserData>> updateUserData({
     required UpdateUserDataRequest request,
   });
+  //
 }
