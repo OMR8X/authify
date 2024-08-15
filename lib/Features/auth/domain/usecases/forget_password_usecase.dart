@@ -7,7 +7,7 @@ import 'package:dartz/dartz.dart';
 class ForgetPasswordUsecase extends UseCase<Unit, ForgetPasswordRequest> {
   final AuthRepository authRepository;
 
-  ForgetPasswordUsecase(this.authRepository);
+  ForgetPasswordUsecase({required this.authRepository});
 
   @override
   Future<Either<Failure, Unit>> call([ForgetPasswordRequest? parameter]) async {

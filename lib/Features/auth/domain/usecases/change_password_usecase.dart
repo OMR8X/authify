@@ -8,13 +8,13 @@ import '../repositories/auth_repository.dart';
 import 'package:dartz/dartz.dart';
 
 class ChangePasswordUsecase extends UseCase<UserData, ChangePasswordRequest> {
-  final AuthRepository repository;
+  final AuthRepository authRepository;
 
-  ChangePasswordUsecase({required this.repository});
+  ChangePasswordUsecase({required this.authRepository});
 
   @override
   Future<Either<Failure, UserData>> call(
       [ChangePasswordRequest? parameter]) async {
-    return await repository.changePassword(request: parameter!);
+    return await authRepository.changePassword(request: parameter!);
   }
 }

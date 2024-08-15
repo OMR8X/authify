@@ -8,7 +8,7 @@ import 'package:dartz/dartz.dart';
 class UpdateUserDataUsecase extends UseCase<UserData, UpdateUserDataRequest> {
   final AuthRepository authRepository;
 
-  UpdateUserDataUsecase(this.authRepository);
+  UpdateUserDataUsecase({required this.authRepository});
 
   @override
   Future<Either<Failure, UserData>> call(

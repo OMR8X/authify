@@ -1,6 +1,5 @@
 import 'package:auhtify/core/resources/errors/exceptions.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 
 class AuthResponse {
   //

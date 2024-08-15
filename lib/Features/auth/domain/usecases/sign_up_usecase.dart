@@ -8,7 +8,7 @@ import 'package:dartz/dartz.dart';
 class SignUpUsecase extends UseCase<UserData, SignUpRequest> {
   final AuthRepository authRepository;
 
-  SignUpUsecase(this.authRepository);
+  SignUpUsecase({required this.authRepository});
 
   @override
   Future<Either<Failure, UserData>> call([SignUpRequest? parameter]) async {

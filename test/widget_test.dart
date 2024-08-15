@@ -23,5 +23,6 @@ void main() async {
         password: "12345678",
       ),
     );
-  } on Exception catch (e) {}
+    // ignore: empty_catches
+  } on Exception {}
 }
