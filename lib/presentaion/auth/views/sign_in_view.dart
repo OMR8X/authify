@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/helpers/input_validator.dart';
 import '../../../core/resources/styles/colors_resources.dart';
 import '../../../core/widgets/ui/fields/button_widget.dart';
 import '../../../core/widgets/ui/fields/check_title_widget.dart';
@@ -27,6 +28,40 @@ class SignInView extends StatefulWidget {
 }
 
 class _SignInViewState extends State<SignInView> {
+  //
+  late final GlobalKey<FormState> _formKey;
+  //
+  late final TextEditingController _emailController;
+  late final TextEditingController _passwordController;
+
+  @override
+  void initState() {
+    //
+    _formKey = GlobalKey<FormState>();
+    //
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  void _submit() {
+    final String email = _emailController.text.trim();
+    final String password = _passwordController.text.trim();
+
+    final signUpRequest = SignInRequest(
+      email: email,
+      password: password,
+    );
+    widget.onSignIn(signUpRequest);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,29 +84,44 @@ class _SignInViewState extends State<SignInView> {
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Image.asset("assets/images/sign-in.png", width: 200),
-                      const SizedBox(height: 30),
-                      //
-                      const TextFormFieldWidget(
-                        hintText: "Email",
-                      ),
-                      const TextFormFieldWidget(
-                        hintText: "Password",
-                      ),
-                      //
-                      const CheckTitleWidget(),
-                      //
-                      ButtonWidget(
-                        title: "sign up",
-                        loading: widget.state.loading,
-                        foregroundColor: ColorsResources.primary,
-                        textColor: ColorsResources.whiteText,
-                        onPressed: () {},
-                      ),
-                    ],
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Image.asset("assets/images/sign-in.png", width: 200),
+                        const SizedBox(height: 30),
+                        //
+                        TextFormFieldWidget(
+                          hintText: "email",
+                          controller: _emailController,
+                          validator: (text) {
+                            return InputValidator.emailValidator(text);
+                          },
+                        ),
+                        TextFormFieldWidget(
+                          hintText: "password",
+                          controller: _passwordController,
+                          validator: (text) {
+                            return InputValidator.passwordValidator(text);
+                          },
+                        ),
+                        //
+                        const CheckTitleWidget(),
+                        //
+                        ButtonWidget(
+                          title: "sign up",
+                          loading: widget.state.loading,
+                          foregroundColor: ColorsResources.primary,
+                          textColor: ColorsResources.whiteText,
+                          onPressed: () {
+                            if (_formKey.currentState?.validate() ?? false) {
+                              _submit();
+                            }
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

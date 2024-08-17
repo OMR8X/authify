@@ -3,6 +3,7 @@ import 'package:auhtify/Features/auth/domain/requests/change_password_request.da
 import 'package:auhtify/Features/auth/domain/requests/forget_password_request.dart';
 import 'package:auhtify/Features/auth/domain/requests/sign_in_request.dart';
 import 'package:auhtify/Features/auth/domain/requests/sign_up_request.dart';
+import 'package:auhtify/Features/auth/domain/usecases/sign_in_usecase.dart';
 import 'package:auhtify/Features/auth/domain/usecases/sign_up_usecase.dart';
 import 'package:auhtify/core/injection/app_injection.dart';
 import 'package:bloc/bloc.dart';
@@ -52,7 +53,23 @@ class AuthCubit extends Cubit<AuthState> {
     emit(const AuthSignIn());
   }
 
-  signIn(SignInRequest request) {}
+  signIn(SignInRequest request) async {
+    //
+    emit(const AuthSignIn(loading: true));
+    //
+    final response = await sl<SignInUseCase>().call(
+      request: request,
+    );
+    //
+    response.fold(
+      (l) {
+        emit(AuthSignIn(error: l.message));
+      },
+      (r) {
+        emit(const AuthSignIn(error: "تم تسجيل الدخول"));
+      },
+    );
+  }
 
   // forget password section
   showForgetPassword() {

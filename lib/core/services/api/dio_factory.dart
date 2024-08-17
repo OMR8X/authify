@@ -9,9 +9,7 @@ class DioFactory {
     //
     if (kDebugMode) {
       dio.interceptors.add(PrettyDioLogger(
-        requestHeader: true,
         requestBody: true,
-        responseHeader: true,
       ));
     }
     //

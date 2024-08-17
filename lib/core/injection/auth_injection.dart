@@ -6,6 +6,7 @@ import 'package:auhtify/Features/auth/domain/usecases/sign_up_usecase.dart';
 import 'package:auhtify/core/injection/app_injection.dart';
 import 'package:auhtify/core/services/api/api_manager.dart';
 
+import '../../Features/auth/domain/usecases/sign_in_usecase.dart';
 import '../services/api/api_client.dart';
 
 authInjection() async {
@@ -17,6 +18,9 @@ authInjection() async {
 Future<void> injectUseCases() async {
   sl.registerFactory<SignUpUseCase>(
     () => SignUpUseCase(repository: sl<AuthRepository>()),
+  );
+  sl.registerFactory<SignInUseCase>(
+    () => SignInUseCase(repository: sl<AuthRepository>()),
   );
 }
 
