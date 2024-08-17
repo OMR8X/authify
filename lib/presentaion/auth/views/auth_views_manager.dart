@@ -1,6 +1,3 @@
-import 'package:auhtify/Features/auth/domain/repositories/auth_repository.dart';
-import 'package:auhtify/Features/auth/domain/usecases/sign_up_usecase.dart';
-import 'package:auhtify/core/injection/app_injection.dart';
 import 'package:auhtify/core/resources/styles/colors_resources.dart';
 import 'package:auhtify/presentaion/auth/state/auth_views_manager_cubit/auth_views_manager_cubit.dart';
 import 'package:auhtify/presentaion/auth/views/change_password_view.dart';
@@ -8,6 +5,7 @@ import 'package:auhtify/presentaion/auth/views/forget_password_view.dart';
 import 'package:auhtify/presentaion/auth/views/sign_in_view.dart';
 import 'package:auhtify/presentaion/auth/views/sign_up_view.dart';
 import 'package:auhtify/presentaion/auth/views/welcom_view.dart';
+import 'package:auhtify/presentaion/home/views/home_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -86,7 +84,7 @@ class _AuthViewsManagerState extends State<AuthViewsManager> {
             },
           );
         } else if (state is AuthDone) {
-          return const CupertinoActivityIndicator();
+          return const HomeView();
         } else {
           return const Center(
             child: CupertinoActivityIndicator(),

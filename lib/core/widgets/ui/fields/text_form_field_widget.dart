@@ -10,11 +10,13 @@ class TextFormFieldWidget extends StatelessWidget {
     this.onSaved,
     this.validator,
     this.controller,
+    this.obscureText = false,
   });
   final TextEditingController? controller;
   final String hintText;
   final void Function(String?)? onSaved;
   final String? Function(String?)? validator;
+  final bool obscureText;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class TextFormFieldWidget extends StatelessWidget {
           child: TextFormField(
             controller: controller,
             validator: validator,
+            obscureText: obscureText,
             onSaved: onSaved,
             style: const TextStyle(
               fontSize: 12,

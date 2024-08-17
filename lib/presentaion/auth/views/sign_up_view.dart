@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auhtify/Features/auth/data/datasources/auth_data_source.dart';
 import 'package:auhtify/Features/auth/domain/requests/sign_in_request.dart';
 import 'package:auhtify/Features/auth/domain/requests/sign_up_request.dart';
@@ -16,6 +18,7 @@ import '../../../core/resources/styles/colors_resources.dart';
 import '../../../core/widgets/text_title_widget.dart';
 import '../../../core/widgets/ui/fields/button_widget.dart';
 import '../../../core/widgets/ui/fields/text_form_field_widget.dart';
+import '../../../core/widgets/ui/shapes/triangle_widget.dart';
 
 class SignUpView extends StatefulWidget {
   const SignUpView({
@@ -91,89 +94,133 @@ class _SignUpViewState extends State<SignUpView> {
           ),
         ),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            Expanded(
-              flex: 89,
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: SingleChildScrollView(
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Image.asset("assets/images/sign-up.png", width: 200),
-                        const SizedBox(height: 30),
-                        //
-                        TextFormFieldWidget(
-                          hintText: "name",
-                          controller: _nameController,
-                          validator: (text) {
-                            return InputValidator.nameValidator(text);
-                          },
+      body: Stack(
+        children: [
+          Align(
+            alignment: const Alignment(-0.8, -0.95),
+            child: AnimatedTriangleWidget(
+              width: 35,
+              height: 35,
+              angle: -pi / 6,
+              color: ColorsResources.colors[4],
+            ),
+          ),
+          Align(
+            alignment: const Alignment(0.8, -0.99),
+            child: AnimatedTriangleWidget(
+              width: 35,
+              height: 35,
+              angle: pi / 6,
+              color: ColorsResources.colors[3],
+            ),
+          ),
+          Align(
+            alignment: const Alignment(-0.9, -0.5),
+            child: AnimatedTriangleWidget(
+              width: 35,
+              height: 35,
+              angle: -pi / 3,
+              color: ColorsResources.colors[2],
+            ),
+          ),
+          Align(
+            alignment: const Alignment(0.8, -0.5),
+            child: AnimatedTriangleWidget(
+              width: 35,
+              height: 35,
+              angle: pi / 4,
+              color: ColorsResources.colors[1],
+            ),
+          ),
+          Center(
+            child: Column(
+              children: [
+                Expanded(
+                  flex: 89,
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: SingleChildScrollView(
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Image.asset("assets/images/sign-up.png",
+                                width: 200),
+                            const SizedBox(height: 30),
+                            //
+                            TextFormFieldWidget(
+                              hintText: "name",
+                              controller: _nameController,
+                              validator: (text) {
+                                return InputValidator.nameValidator(text);
+                              },
+                            ),
+                            TextFormFieldWidget(
+                              hintText: "email",
+                              controller: _emailController,
+                              validator: (text) {
+                                return InputValidator.emailValidator(text);
+                              },
+                            ),
+                            TextFormFieldWidget(
+                              hintText: "password",
+                              obscureText: true,
+                              controller: _passwordController,
+                              validator: (text) {
+                                return InputValidator.passwordValidator(text);
+                              },
+                            ),
+                            TextFormFieldWidget(
+                              hintText: "confirm password",
+                              obscureText: true,
+                              controller: _confirmPasswordController,
+                              validator: (text) {
+                                if (_passwordController.text !=
+                                    _confirmPasswordController.text) {
+                                  return "Passwords do not match";
+                                }
+                                return InputValidator.passwordValidator(text);
+                              },
+                            ),
+                            //
+                            CheckTitleWidget(
+                              value: keepLoggedIn,
+                              onChange: (value) {
+                                setState(() {
+                                  keepLoggedIn = value;
+                                });
+                              },
+                            ),
+                            //
+                            ButtonWidget(
+                              title: "sign up",
+                              loading: widget.state.loading,
+                              foregroundColor: ColorsResources.primary,
+                              textColor: ColorsResources.whiteText,
+                              onPressed: () {
+                                if (_formKey.currentState?.validate() ??
+                                    false) {
+                                  _submit();
+                                }
+                              },
+                            ),
+                          ],
                         ),
-                        TextFormFieldWidget(
-                          hintText: "email",
-                          controller: _emailController,
-                          validator: (text) {
-                            return InputValidator.emailValidator(text);
-                          },
-                        ),
-                        TextFormFieldWidget(
-                          hintText: "password",
-                          controller: _passwordController,
-                          validator: (text) {
-                            return InputValidator.passwordValidator(text);
-                          },
-                        ),
-                        TextFormFieldWidget(
-                          hintText: "confirm password",
-                          controller: _confirmPasswordController,
-                          validator: (text) {
-                            if (_passwordController.text !=
-                                _confirmPasswordController.text) {
-                              return "Passwords do not match";
-                            }
-                            return InputValidator.passwordValidator(text);
-                          },
-                        ),
-                        //
-                        CheckTitleWidget(
-                          value: keepLoggedIn,
-                          onChange: (value) {
-                            setState(() {
-                              keepLoggedIn = value;
-                            });
-                          },
-                        ),
-                        //
-                        ButtonWidget(
-                          title: "sign up",
-                          loading: widget.state.loading,
-                          foregroundColor: ColorsResources.primary,
-                          textColor: ColorsResources.whiteText,
-                          onPressed: () {
-                            if (_formKey.currentState?.validate() ?? false) {
-                              _submit();
-                            }
-                          },
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
-              ),
+                const Expanded(
+                  flex: 11,
+                  child: Column(
+                    children: [],
+                  ),
+                ),
+              ],
             ),
-            const Expanded(
-              flex: 11,
-              child: Column(
-                children: [],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

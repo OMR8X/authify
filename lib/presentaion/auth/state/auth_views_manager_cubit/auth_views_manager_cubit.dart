@@ -1,4 +1,5 @@
 // ignore: depend_on_referenced_packages
+import 'package:auhtify/Features/auth/domain/entites/user_data.dart';
 import 'package:auhtify/Features/auth/domain/requests/change_password_request.dart';
 import 'package:auhtify/Features/auth/domain/requests/forget_password_request.dart';
 import 'package:auhtify/Features/auth/domain/requests/sign_in_request.dart';
@@ -8,20 +9,21 @@ import 'package:auhtify/Features/auth/domain/usecases/forget_password_usecase.da
 import 'package:auhtify/Features/auth/domain/usecases/sign_in_usecase.dart';
 import 'package:auhtify/Features/auth/domain/usecases/sign_up_usecase.dart';
 import 'package:auhtify/core/injection/app_injection.dart';
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 
 part 'auth_views_manager_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(const AuthWelcome());
-
+  //
+  late UserData userData;
   //
   init() {
     showWelcome();
   }
 
+  injectUserData(UserData userData) {}
   //
   showWelcome() {
     emit(const AuthWelcome());
@@ -45,7 +47,11 @@ class AuthCubit extends Cubit<AuthState> {
         emit(AuthSignUp(error: l.message));
       },
       (r) {
-        emit(const AuthSignUp(error: "تم انشاء حساب"));
+        //
+        injectUserData(r);
+        //
+        emit(const AuthDone(error: "تم انشاء حساب"));
+        //
       },
     );
   }
@@ -68,7 +74,10 @@ class AuthCubit extends Cubit<AuthState> {
         emit(AuthSignIn(error: l.message));
       },
       (r) {
-        emit(const AuthSignIn(error: "تم تسجيل الدخول"));
+        //
+        injectUserData(r);
+        //
+        emit(const AuthDone(error: "تم تسجيل الدخول"));
       },
     );
   }
