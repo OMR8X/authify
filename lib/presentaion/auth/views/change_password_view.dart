@@ -3,6 +3,7 @@ import 'package:auhtify/presentaion/auth/state/auth_views_manager_cubit/auth_vie
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/helpers/input_validator.dart';
 import '../../../core/resources/styles/colors_resources.dart';
 import '../../../core/resources/styles/sizes_resources.dart';
 import '../../../core/widgets/text_title_widget.dart';
@@ -24,6 +25,43 @@ class ChangePasswordView extends StatefulWidget {
 }
 
 class _ChangePasswordViewState extends State<ChangePasswordView> {
+  //
+  late final GlobalKey<FormState> _formKey;
+  //
+  late final TextEditingController _codeController;
+  late final TextEditingController _passwordController;
+  late final TextEditingController _confirmPasswordController;
+  bool keepLoggedIn = false;
+  @override
+  void initState() {
+    //
+    _formKey = GlobalKey<FormState>();
+    //
+    _codeController = TextEditingController();
+    _passwordController = TextEditingController();
+    _confirmPasswordController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _codeController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  void _submit() {
+    final String code = _codeController.text.trim();
+    final String password = _passwordController.text.trim();
+
+    final signUpRequest = ChangePasswordRequest(
+      code: code,
+      password: password,
+    );
+    widget.onChangePassword(signUpRequest);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,36 +82,55 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Image.asset("assets/images/change-password.png",
-                          width: 200),
-                      const SizedBox(height: 50),
-                      //
-                      const TextTitleWidget(
-                        title:
-                            "We've send you password reset code check your email",
-                      ),
-                      //
-                      const TextFormFieldWidget(
-                        hintText: "code",
-                      ),
-                      const TextFormFieldWidget(
-                        hintText: "password",
-                      ),
-                      const TextFormFieldWidget(
-                        hintText: "confirm password",
-                      ),
-                      //
-                      ButtonWidget(
-                        title: "change password",
-                        loading: widget.state.loading,
-                        foregroundColor: ColorsResources.primary,
-                        textColor: ColorsResources.whiteText,
-                        onPressed: () {},
-                      ),
-                    ],
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Image.asset("assets/images/change-password.png",
+                            width: 200),
+                        const SizedBox(height: 50),
+                        //
+                        const TextTitleWidget(
+                          title:
+                              "We've send you password reset code check your email",
+                        ),
+                        //
+                        TextFormFieldWidget(
+                          hintText: "code",
+                          controller: _codeController,
+                          validator: (text) {
+                            return InputValidator.numberValidator(text);
+                          },
+                        ),
+                        TextFormFieldWidget(
+                          hintText: "password",
+                          controller: _passwordController,
+                          validator: (text) {
+                            return InputValidator.passwordValidator(text);
+                          },
+                        ),
+                        TextFormFieldWidget(
+                          hintText: "confirm password",
+                          controller: _confirmPasswordController,
+                          validator: (text) {
+                            return InputValidator.passwordValidator(text);
+                          },
+                        ),
+                        //
+                        ButtonWidget(
+                          title: "change password",
+                          loading: widget.state.loading,
+                          foregroundColor: ColorsResources.primary,
+                          textColor: ColorsResources.whiteText,
+                          onPressed: () {
+                            if (_formKey.currentState?.validate() ?? false) {
+                              _submit();
+                            }
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

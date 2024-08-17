@@ -10,7 +10,7 @@ import '../../domain/requests/update_user_data_request.dart';
 abstract class AuthRemoteDataSource {
   
   // change user password
-  Future<UserData> changePassword({
+  Future<Unit> changePassword({
     required ChangePasswordRequest request,
   });
   // send code to user via email to reset password.

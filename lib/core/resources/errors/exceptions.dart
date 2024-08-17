@@ -1,7 +1,8 @@
 import 'dart:core';
 
 class ServerException implements Exception {
-  const ServerException();
+  final String message;
+  const ServerException({this.message = ""});
 }
 
 class AuthException implements Exception {

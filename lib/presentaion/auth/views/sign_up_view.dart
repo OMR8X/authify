@@ -41,7 +41,7 @@ class _SignUpViewState extends State<SignUpView> {
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
   late final TextEditingController _confirmPasswordController;
-
+  bool keepLoggedIn = false;
   @override
   void initState() {
     //
@@ -57,7 +57,7 @@ class _SignUpViewState extends State<SignUpView> {
   @override
   void dispose() {
     _nameController.dispose();
-  _emailController.dispose();
+    _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
@@ -72,6 +72,7 @@ class _SignUpViewState extends State<SignUpView> {
       name: name,
       email: email,
       password: password,
+      keepLoggedIn: keepLoggedIn,
     );
     widget.onSignUp(signUpRequest);
   }
@@ -139,7 +140,14 @@ class _SignUpViewState extends State<SignUpView> {
                           },
                         ),
                         //
-                        const CheckTitleWidget(),
+                        CheckTitleWidget(
+                          value: keepLoggedIn,
+                          onChange: (value) {
+                            setState(() {
+                              keepLoggedIn = value;
+                            });
+                          },
+                        ),
                         //
                         ButtonWidget(
                           title: "sign up",

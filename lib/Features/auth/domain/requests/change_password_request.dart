@@ -1,16 +1,16 @@
 class ChangePasswordRequest {
   final String code;
-  final String newPassword;
+  final String password;
 
   ChangePasswordRequest({
     required this.code,
-    required this.newPassword,
+    required this.password,
   });
 
   Map<String, dynamic> toJson() {
     return {
       "code": code,
-      "password": newPassword,
+      "password": password,
     };
   }
 }

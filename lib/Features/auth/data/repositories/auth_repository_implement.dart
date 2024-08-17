@@ -23,12 +23,12 @@ class AuthRepositoryImplement implements AuthRepository {
   });
 
   @override
-  Future<Either<Failure, UserData>> changePassword({
+  Future<Either<Failure, Unit>> changePassword({
     required ChangePasswordRequest request,
   }) async {
     try {
-      final response = await remoteDataSource.changePassword(request: request);
-      return right(response);
+      await remoteDataSource.changePassword(request: request);
+      return right(unit);
       //
     } on DioException catch (e) {
       return left(ServerFailure(message: e.message));

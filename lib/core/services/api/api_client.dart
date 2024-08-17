@@ -63,12 +63,7 @@ class DioClient implements ApiClient {
       sendTimeout: const Duration(seconds: ApiSettings.sendTimeout),
       connectTimeout: const Duration(seconds: ApiSettings.connectTimeout),
       validateStatus: (status) {
-        //
-        List<int> accepted = [401];
-        //
-        if (status == null) return false;
-        //
-        return (status >= 200 && status < 300 || accepted.contains(status));
+        return true;
       },
     );
   }

@@ -11,6 +11,19 @@ class InputValidator {
     return null;
   }
 
+  static String? numberValidator(String? text) {
+    //
+    if (text == null) return noEmptyFiled;
+    if (text.isEmpty) return noEmptyFiled;
+    text.trim();
+    //
+    if (int.tryParse(text) == null) {
+      return "enter valid number";
+    }
+    //
+    return null;
+  }
+
   static String? emailValidator(String? text) {
     //
     if (text == null) return noEmptyFiled;

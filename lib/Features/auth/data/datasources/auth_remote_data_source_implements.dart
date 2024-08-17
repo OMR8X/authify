@@ -19,7 +19,7 @@ class AuthRemoteDataSourceImplements implements AuthRemoteDataSource {
   AuthRemoteDataSourceImplements({required this.apiManager});
 
   @override
-  Future<UserData> changePassword({
+  Future<Unit> changePassword({
     required ChangePasswordRequest request,
   }) async {
     //
@@ -36,11 +36,7 @@ class AuthRemoteDataSourceImplements implements AuthRemoteDataSource {
     //
     if (dioResponse.statusCode == 200) {
       //
-      final user = UserDataModel.fromJson(
-        response.getData(key: "user"),
-      );
-      //
-      return user;
+      return unit;
     }
     //
     throw const ServerException();

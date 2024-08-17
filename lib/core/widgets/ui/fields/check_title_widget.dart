@@ -5,7 +5,11 @@ import '../../../resources/styles/sizes_resources.dart';
 class CheckTitleWidget extends StatelessWidget {
   const CheckTitleWidget({
     super.key,
+    required this.onChange,
+    this.value = false,
   });
+  final bool value;
+  final void Function(bool) onChange;
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +20,10 @@ class CheckTitleWidget extends StatelessWidget {
         child: Row(
           children: [
             Checkbox(
-              value: true,
-              onChanged: (value) {},
+              value: value,
+              onChanged: (value) {
+                onChange(value ?? false);
+              },
             ),
             const Text("keep me logged in"),
           ],

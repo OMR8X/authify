@@ -3,6 +3,8 @@ import 'package:auhtify/Features/auth/domain/requests/change_password_request.da
 import 'package:auhtify/Features/auth/domain/requests/forget_password_request.dart';
 import 'package:auhtify/Features/auth/domain/requests/sign_in_request.dart';
 import 'package:auhtify/Features/auth/domain/requests/sign_up_request.dart';
+import 'package:auhtify/Features/auth/domain/usecases/change_password_usecase.dart';
+import 'package:auhtify/Features/auth/domain/usecases/forget_password_usecase.dart';
 import 'package:auhtify/Features/auth/domain/usecases/sign_in_usecase.dart';
 import 'package:auhtify/Features/auth/domain/usecases/sign_up_usecase.dart';
 import 'package:auhtify/core/injection/app_injection.dart';
@@ -76,12 +78,44 @@ class AuthCubit extends Cubit<AuthState> {
     emit(const AuthForgetPassword());
   }
 
-  forgetPassword(ForgetPasswordRequest request) {}
+  forgetPassword(ForgetPasswordRequest request) async {
+    //
+    emit(const AuthForgetPassword(loading: true));
+    //
+    final response = await sl<ForgetPasswordUseCase>().call(
+      request: request,
+    );
+    //
+    response.fold(
+      (l) {
+        emit(AuthForgetPassword(error: l.message));
+      },
+      (r) {
+        emit(const AuthChangePassword(error: "تم ارسال رمز التحقق بجاح"));
+      },
+    );
+  }
 
   //
   showChangePassword() {
     emit(const AuthChangePassword());
   }
 
-  changePassword(ChangePasswordRequest request) {}
+  changePassword(ChangePasswordRequest request) async {
+    //
+    emit(const AuthChangePassword(loading: true));
+    //
+    final response = await sl<ChangePasswordUseCase>().call(
+      request: request,
+    );
+    //
+    response.fold(
+      (l) {
+        emit(AuthChangePassword(error: l.message));
+      },
+      (r) {
+        emit(const AuthSignIn(error: "تم تغيير الرمز بنجاح"));
+      },
+    );
+  }
 }

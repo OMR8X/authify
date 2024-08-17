@@ -33,7 +33,9 @@ class _SignInViewState extends State<SignInView> {
   //
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
-
+  //
+  bool keepLoggedIn = false;
+  //
   @override
   void initState() {
     //
@@ -58,6 +60,7 @@ class _SignInViewState extends State<SignInView> {
     final signUpRequest = SignInRequest(
       email: email,
       password: password,
+      keepLoggedIn: keepLoggedIn,
     );
     widget.onSignIn(signUpRequest);
   }
@@ -107,7 +110,14 @@ class _SignInViewState extends State<SignInView> {
                           },
                         ),
                         //
-                        const CheckTitleWidget(),
+                        CheckTitleWidget(
+                          value: keepLoggedIn,
+                          onChange: (value) {
+                            setState(() {
+                              keepLoggedIn = value;
+                            });
+                          },
+                        ),
                         //
                         ButtonWidget(
                           title: "sign up",

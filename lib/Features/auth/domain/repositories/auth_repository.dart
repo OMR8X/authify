@@ -10,7 +10,7 @@ import 'package:dartz/dartz.dart';
 
 abstract class AuthRepository {
   // change user password
-  Future<Either<Failure, UserData>> changePassword({
+  Future<Either<Failure, Unit>> changePassword({
     required ChangePasswordRequest request,
   });
   // send code to user via email to reset password.
