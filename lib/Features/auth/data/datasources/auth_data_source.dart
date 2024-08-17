@@ -7,7 +7,7 @@ import '../../domain/requests/sign_in_request.dart';
 import '../../domain/requests/sign_up_request.dart';
 import '../../domain/requests/update_user_data_request.dart';
 
-abstract class AuthDataSource {
+abstract class AuthRemoteDataSource {
   
   // change user password
   Future<UserData> changePassword({

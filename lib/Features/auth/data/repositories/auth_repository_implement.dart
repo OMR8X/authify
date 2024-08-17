@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:auhtify/Features/auth/data/datasources/auth_data_source.dart';
 import 'package:auhtify/core/resources/errors/exceptions.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
@@ -15,7 +16,7 @@ import '../../domain/requests/update_user_data_request.dart';
 import '../datasources/auth_remote_data_source_implements.dart';
 
 class AuthRepositoryImplement implements AuthRepository {
-  final AuthRemoteDataSourceImplements remoteDataSource;
+  final AuthRemoteDataSource remoteDataSource;
 
   AuthRepositoryImplement({
     required this.remoteDataSource,

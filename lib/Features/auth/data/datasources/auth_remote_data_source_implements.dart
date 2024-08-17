@@ -6,24 +6,24 @@ import 'package:auhtify/Features/auth/domain/requests/forget_password_request.da
 import 'package:auhtify/Features/auth/domain/requests/sign_in_request.dart';
 import 'package:auhtify/Features/auth/domain/requests/sign_up_request.dart';
 import 'package:auhtify/Features/auth/domain/requests/update_user_data_request.dart';
-import 'package:auhtify/core/services/api/api_client.dart';
 import 'package:auhtify/core/services/api/api_constants.dart';
 import 'package:auhtify/core/resources/errors/exceptions.dart';
 
 import 'package:dartz/dartz.dart';
+import '../../../../core/services/api/api_manager.dart';
 import 'auth_data_source.dart';
 
-class AuthRemoteDataSourceImplements implements AuthDataSource {
-  final DioClient client;
+class AuthRemoteDataSourceImplements implements AuthRemoteDataSource {
+  final ApiManager apiManager;
 
-  AuthRemoteDataSourceImplements({required this.client});
+  AuthRemoteDataSourceImplements({required this.apiManager});
 
   @override
   Future<UserData> changePassword({
     required ChangePasswordRequest request,
   }) async {
     //
-    final dioResponse = await client.post(
+    final dioResponse = await apiManager().post(
       ApiUris.changePassword,
       request.toJson(),
     );
@@ -51,7 +51,7 @@ class AuthRemoteDataSourceImplements implements AuthDataSource {
     required ForgetPasswordRequest request,
   }) async {
     //
-    final dioResponse = await client.post(
+    final dioResponse = await apiManager().post(
       ApiUris.forgetPassword,
       request.toJson(),
     );
@@ -74,7 +74,7 @@ class AuthRemoteDataSourceImplements implements AuthDataSource {
     required SignInRequest request,
   }) async {
     //
-    final dioResponse = await client.post(
+    final dioResponse = await apiManager().post(
       ApiUris.signIn,
       request.toJson(),
     );
@@ -102,7 +102,7 @@ class AuthRemoteDataSourceImplements implements AuthDataSource {
     required SignUpRequest request,
   }) async {
     //
-    final dioResponse = await client.post(
+    final dioResponse = await apiManager().post(
       ApiUris.signUp,
       request.toJson(),
     );
@@ -130,7 +130,8 @@ class AuthRemoteDataSourceImplements implements AuthDataSource {
     required UpdateUserDataRequest request,
   }) async {
     //
-    final dioResponse = await client.post(ApiUris.signIn, request.toJson());
+    final dioResponse =
+        await apiManager().post(ApiUris.signIn, request.toJson());
     //
     AuthResponse response = AuthResponse.fromDioResponse(dioResponse);
     //

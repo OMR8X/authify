@@ -1,6 +1,8 @@
 import 'package:auhtify/core/services/api/api_constants.dart';
 import 'package:auhtify/core/services/api/dio_factory.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 abstract class ApiClient {
   /// get request
@@ -40,10 +42,6 @@ abstract class ApiClient {
 }
 
 class DioClient implements ApiClient {
-  //
-  // TODO :
-  // Handle Errors.
-  // Use Constants
   //
   late final DioFactory _dioFactory;
   late final Map<String, String> defaultHeaders;

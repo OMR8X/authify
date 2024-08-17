@@ -1,18 +1,22 @@
 import 'package:auhtify/Features/auth/domain/entites/user_data.dart';
-import 'package:auhtify/Features/auth/domain/repositories/auth_repository.dart';
-import 'package:auhtify/Features/auth/domain/requests/update_user_data_request.dart';
-import 'package:auhtify/core/resources/errors/failures.dart';
 import 'package:auhtify/core/usecases/use_case.dart';
+
+import '../../../../core/resources/errors/failures.dart';
+import '../repositories/auth_repository.dart';
+import '../requests/sign_in_request.dart';
+
 import 'package:dartz/dartz.dart';
 
-class UpdateUserDataUsecase extends UseCase<UserData, UpdateUserDataRequest> {
-  final AuthRepository authRepository;
+import '../requests/update_user_data_request.dart';
 
-  UpdateUserDataUsecase({required this.authRepository});
+class UpdateUserDataUseCase {
+  final AuthRepository repository;
 
-  @override
-  Future<Either<Failure, UserData>> call(
-      [UpdateUserDataRequest? parameter]) async {
-    return await authRepository.updateUserData(request: parameter!);
+  UpdateUserDataUseCase({required this.repository});
+
+  Future<Either<Failure, UserData>> call({
+    required UpdateUserDataRequest request,
+  }) async {
+    return await repository.updateUserData(request: request);
   }
 }

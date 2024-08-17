@@ -1,16 +1,20 @@
-import 'package:auhtify/Features/auth/domain/repositories/auth_repository.dart';
-import 'package:auhtify/Features/auth/domain/requests/forget_password_request.dart';
-import 'package:auhtify/core/resources/errors/failures.dart';
-import 'package:auhtify/core/usecases/use_case.dart';
+import 'package:auhtify/Features/auth/domain/entites/user_data.dart';
+import 'package:auhtify/Features/auth/domain/requests/change_password_request.dart';
+
+import '../../../../core/resources/errors/failures.dart';
+import '../repositories/auth_repository.dart';
+import '../requests/sign_in_request.dart';
+
 import 'package:dartz/dartz.dart';
 
-class ForgetPasswordUsecase extends UseCase<Unit, ForgetPasswordRequest> {
-  final AuthRepository authRepository;
+class ChangePasswordUseCase {
+  final AuthRepository repository;
 
-  ForgetPasswordUsecase({required this.authRepository});
+  ChangePasswordUseCase({required this.repository});
 
-  @override
-  Future<Either<Failure, Unit>> call([ForgetPasswordRequest? parameter]) async {
-    return await authRepository.forgetPassword(request: parameter!);
+  Future<Either<Failure, UserData>> call({
+    required ChangePasswordRequest request,
+  }) async {
+    return await repository.changePassword(request: request);
   }
 }
