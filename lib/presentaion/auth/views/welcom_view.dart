@@ -28,6 +28,9 @@ class WelcomeView extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: SingleChildScrollView(
                   child: Column(
+
+
+                    
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       const Text(
