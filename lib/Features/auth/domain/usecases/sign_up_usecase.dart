@@ -1,3 +1,4 @@
+import 'package:auhtify/Features/auth/data/responses/sign_up_response.dart';
 import 'package:auhtify/Features/auth/domain/entites/user_data.dart';
 import 'package:auhtify/Features/auth/domain/requests/sign_up_request.dart';
 import '../../../../core/resources/errors/failures.dart';
@@ -10,7 +11,7 @@ class SignUpUseCase {
 
   SignUpUseCase({required this.repository});
 
-  Future<Either<Failure, UserData>> call({
+  Future<Either<Failure, SignUpResponse>> call({
     required SignUpRequest request,
   }) async {
     return await repository.signUp(request: request);

@@ -6,7 +6,7 @@ class UpdateUserDataRequest {
     required this.name,
     required this.email,
   });
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toBody() {
     return {
       "name": name,
       "email": email,

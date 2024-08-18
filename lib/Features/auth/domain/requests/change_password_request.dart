@@ -7,7 +7,7 @@ class ChangePasswordRequest {
     required this.password,
   });
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toBody() {
     return {
       "code": code,
       "password": password,

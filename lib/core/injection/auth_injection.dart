@@ -9,7 +9,9 @@ import 'package:auhtify/Features/auth/domain/usecases/update_user_data_usecase.d
 import 'package:auhtify/core/injection/app_injection.dart';
 import 'package:auhtify/core/services/api/api_manager.dart';
 
+import '../../Features/auth/domain/usecases/get_user_data_usecase.dart';
 import '../../Features/auth/domain/usecases/sign_in_usecase.dart';
+import '../../Features/auth/domain/usecases/sign_out_usecase.dart';
 import '../services/api/api_client.dart';
 
 authInjection() async {
@@ -33,6 +35,12 @@ Future<void> injectUseCases() async {
   );
   sl.registerFactory<UpdateUserDataUseCase>(
     () => UpdateUserDataUseCase(repository: sl<AuthRepository>()),
+  );
+  sl.registerFactory<SignOutUseCase>(
+    () => SignOutUseCase(repository: sl<AuthRepository>()),
+  );
+  sl.registerFactory<GetUserDataUseCase>(
+    () => GetUserDataUseCase(repository: sl<AuthRepository>()),
   );
 }
 

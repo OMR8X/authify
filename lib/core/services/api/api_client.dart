@@ -15,8 +15,8 @@ abstract class ApiClient {
 
   /// post request
   Future<dynamic> post(
-    String uri,
-    Object? body, {
+    String uri, {
+    Object? body,
     bool requireAuth = false,
     Map<String, dynamic>? headers,
     Map<String, dynamic> queryParameters = const {},
@@ -24,8 +24,8 @@ abstract class ApiClient {
 
   /// update request
   Future<dynamic> put(
-    String uri,
-    Object? body, {
+    String uri, {
+    Object? body,
     bool requireAuth = false,
     Map<String, dynamic>? headers,
     Map<String, dynamic> queryParameters = const {},
@@ -33,8 +33,8 @@ abstract class ApiClient {
 
   /// delete request
   Future<dynamic> delete(
-    String uri,
-    Object? body, {
+    String uri, {
+    Object? body,
     bool requireAuth = false,
     Map<String, dynamic>? headers,
     Map<String, dynamic> queryParameters = const {},
@@ -82,8 +82,8 @@ class DioClient implements ApiClient {
 
   @override
   Future<Response> post(
-    String uri,
-    Object? body, {
+    String uri, {
+    Object? body,
     bool requireAuth = false,
     Map<String, dynamic>? headers,
     Map<String, dynamic> queryParameters = const {},
@@ -95,8 +95,8 @@ class DioClient implements ApiClient {
 
   @override
   Future<Response> put(
-    String uri,
-    Object? body, {
+    String uri, {
+    Object? body,
     bool requireAuth = false,
     Map<String, dynamic>? headers,
     Map<String, dynamic> queryParameters = const {},
@@ -108,8 +108,8 @@ class DioClient implements ApiClient {
 
   @override
   Future<Response> delete(
-    String uri,
-    Object? body, {
+    String uri, {
+    Object? body,
     bool requireAuth = false,
     Map<String, dynamic>? headers,
     Map<String, dynamic> queryParameters = const {},

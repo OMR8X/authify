@@ -1,13 +1,18 @@
 import 'package:auhtify/Features/auth/data/models/user_data_model.dart';
-import 'package:auhtify/Features/auth/data/responses/auth_response.dart';
+import 'package:auhtify/Features/auth/data/responses/sign_in_response.dart';
+import 'package:auhtify/Features/auth/data/responses/sign_up_response.dart';
 import 'package:auhtify/Features/auth/domain/entites/user_data.dart';
 import 'package:auhtify/Features/auth/domain/requests/change_password_request.dart';
 import 'package:auhtify/Features/auth/domain/requests/forget_password_request.dart';
+import 'package:auhtify/Features/auth/domain/requests/get_user_data_request.dart';
 import 'package:auhtify/Features/auth/domain/requests/sign_in_request.dart';
+import 'package:auhtify/Features/auth/domain/requests/sign_out_request.dart';
 import 'package:auhtify/Features/auth/domain/requests/sign_up_request.dart';
 import 'package:auhtify/Features/auth/domain/requests/update_user_data_request.dart';
 import 'package:auhtify/core/services/api/api_constants.dart';
 import 'package:auhtify/core/resources/errors/exceptions.dart';
+import 'package:auhtify/core/services/api/api_response.dart';
+import 'package:auhtify/core/services/tokens/tokens_manager.dart';
 
 import 'package:dartz/dartz.dart';
 import '../../../../core/services/api/api_manager.dart';
@@ -25,13 +30,13 @@ class AuthRemoteDataSourceImplements implements AuthRemoteDataSource {
     //
     final dioResponse = await apiManager().post(
       ApiUris.changePassword,
-      request.toJson(),
+      body: request.toBody(),
     );
     //
-    AuthResponse response = AuthResponse.fromDioResponse(dioResponse);
+    ApiResponse apiResponse = ApiResponse.fromDioResponse(dioResponse);
     //
-    if (response.hasError) {
-      throw AuthException(message: response.message);
+    if (apiResponse.hasError) {
+      throw AuthException(message: apiResponse.message);
     }
     //
     if (dioResponse.statusCode == 200) {
@@ -49,13 +54,13 @@ class AuthRemoteDataSourceImplements implements AuthRemoteDataSource {
     //
     final dioResponse = await apiManager().post(
       ApiUris.forgetPassword,
-      request.toJson(),
+      body: request.toBody(),
     );
     //
-    AuthResponse response = AuthResponse.fromDioResponse(dioResponse);
+    ApiResponse apiResponse = ApiResponse.fromDioResponse(dioResponse);
     //
-    if (response.hasError) {
-      throw AuthException(message: response.message);
+    if (apiResponse.hasError) {
+      throw AuthException(message: apiResponse.message);
     }
     //
     if (dioResponse.statusCode == 200) {
@@ -66,25 +71,81 @@ class AuthRemoteDataSourceImplements implements AuthRemoteDataSource {
   }
 
   @override
-  Future<UserData> signIn({
+  Future<SignInResponse> signIn({
     required SignInRequest request,
   }) async {
     //
     final dioResponse = await apiManager().post(
       ApiUris.signIn,
-      request.toJson(),
+      body: request.toBody(),
     );
     //
-    AuthResponse response = AuthResponse.fromDioResponse(dioResponse);
+    ApiResponse apiResponse = ApiResponse.fromDioResponse(dioResponse);
     //
-    if (response.hasError) {
-      throw AuthException(message: response.message);
+    if (apiResponse.hasError) {
+      throw AuthException(message: apiResponse.message);
+    }
+    //
+    if (dioResponse.statusCode == 200) {
+      //
+      final response = SignInResponse.fromResponse(apiResponse);
+      //
+      return response;
+    }
+    //
+    throw const ServerException();
+  }
+
+  @override
+  Future<SignUpResponse> signUp({
+    required SignUpRequest request,
+  }) async {
+    //
+    final dioResponse = await apiManager().post(
+      ApiUris.signUp,
+      body: request.toBody(),
+    );
+    //
+    ApiResponse apiResponse = ApiResponse.fromDioResponse(dioResponse);
+    //
+    if (apiResponse.hasError) {
+      throw AuthException(message: apiResponse.message);
+    }
+    //
+    if (dioResponse.statusCode == 200) {
+      //
+      final response = SignUpResponse.fromResponse(apiResponse);
+      //
+      return response;
+    }
+    //
+    throw const ServerException();
+  }
+
+  @override
+  Future<UserData> getUserData({
+    required GetUserDataRequest request,
+  }) async {
+    //
+    final dioResponse = await apiManager().post(
+      ApiUris.getUserData,
+      headers: request.toHeaders(),
+    );
+    //
+    ApiResponse apiResponse = ApiResponse.fromDioResponse(dioResponse);
+    //
+    if (apiResponse.hasError) {
+      throw AuthException(message: apiResponse.message);
     }
     //
     if (dioResponse.statusCode == 200) {
       //
       final user = UserDataModel.fromJson(
-        response.getData(key: "user"),
+        apiResponse.getData(key: "user"),
+      );
+      // set token
+      await TokenManager.instance.setToken(
+        apiResponse.getData(key: 'token'),
       );
       //
       return user;
@@ -94,28 +155,25 @@ class AuthRemoteDataSourceImplements implements AuthRemoteDataSource {
   }
 
   @override
-  Future<UserData> signUp({
-    required SignUpRequest request,
-  }) async {
+  Future<Unit> signOut({required SignOutRequest request}) async {
     //
     final dioResponse = await apiManager().post(
-      ApiUris.signUp,
-      request.toJson(),
+      ApiUris.signOut,
+      headers: request.toHeaders(),
     );
     //
-    AuthResponse response = AuthResponse.fromDioResponse(dioResponse);
+    ApiResponse apiResponse = ApiResponse.fromDioResponse(dioResponse);
     //
-    if (response.hasError) {
-      throw AuthException(message: response.message);
+    if (apiResponse.hasError) {
+      throw AuthException(message: apiResponse.message);
     }
     //
     if (dioResponse.statusCode == 200) {
       //
-      final user = UserDataModel.fromJson(
-        response.getData(key: "user"),
-      );
+      // delete token
+      await TokenManager.instance.deleteToken();
       //
-      return user;
+      return unit;
     }
     //
     throw const ServerException();
@@ -126,19 +184,21 @@ class AuthRemoteDataSourceImplements implements AuthRemoteDataSource {
     required UpdateUserDataRequest request,
   }) async {
     //
-    final dioResponse =
-        await apiManager().post(ApiUris.signIn, request.toJson());
+    final dioResponse = await apiManager().post(
+      ApiUris.signIn,
+      body: request.toBody(),
+    );
     //
-    AuthResponse response = AuthResponse.fromDioResponse(dioResponse);
+    ApiResponse apiResponse = ApiResponse.fromDioResponse(dioResponse);
     //
-    if (response.hasError) {
-      throw AuthException(message: response.message);
+    if (apiResponse.hasError) {
+      throw AuthException(message: apiResponse.message);
     }
     //
     if (dioResponse.statusCode == 200) {
       //
       final user = UserDataModel.fromJson(
-        response.getData(key: "user"),
+        apiResponse.getData(key: "user"),
       );
       //
       return user;

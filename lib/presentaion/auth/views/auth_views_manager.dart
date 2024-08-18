@@ -7,6 +7,7 @@ import 'package:auhtify/presentaion/auth/views/sign_up_view.dart';
 import 'package:auhtify/presentaion/auth/views/welcom_view.dart';
 import 'package:auhtify/presentaion/home/views/home_view.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -29,9 +30,9 @@ class _AuthViewsManagerState extends State<AuthViewsManager> {
     final cubit = context.read<AuthCubit>();
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
-        if (state.error != null) {
+        if (state.message != null) {
           Fluttertoast.showToast(
-            msg: state.error!,
+            msg: state.message!,
             backgroundColor: ColorsResources.background,
             textColor: ColorsResources.whiteText,
             fontSize: 16.0,
@@ -86,8 +87,26 @@ class _AuthViewsManagerState extends State<AuthViewsManager> {
         } else if (state is AuthDone) {
           return const HomeView();
         } else {
-          return const Center(
-            child: CupertinoActivityIndicator(),
+          return const Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Authify",
+                    style: TextStyle(
+                      color: ColorsResources.primary,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 19,
+                    ),
+                  ),
+                  //
+                  SizedBox(height: 10),
+                  //
+                  CupertinoActivityIndicator(),
+                ],
+              ),
+            ),
           );
         }
       },

@@ -11,7 +11,7 @@ class SignUpRequest {
     required this.keepLoggedIn,
   });
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toBody() {
     return {
       "name": name,
       "email": email,

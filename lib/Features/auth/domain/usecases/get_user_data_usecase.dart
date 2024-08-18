@@ -1,5 +1,5 @@
-import 'package:auhtify/Features/auth/data/responses/sign_in_response.dart';
 import 'package:auhtify/Features/auth/domain/entites/user_data.dart';
+import 'package:auhtify/Features/auth/domain/requests/get_user_data_request.dart';
 
 import '../../../../core/resources/errors/failures.dart';
 import '../repositories/auth_repository.dart';
@@ -7,14 +7,14 @@ import '../requests/sign_in_request.dart';
 
 import 'package:dartz/dartz.dart';
 
-class SignInUseCase {
+class GetUserDataUseCase {
   final AuthRepository repository;
 
-  SignInUseCase({required this.repository});
+  GetUserDataUseCase({required this.repository});
 
-  Future<Either<Failure, SignInResponse>> call({
-    required SignInRequest request,
+  Future<Either<Failure, UserData>> call({
+    required GetUserDataRequest request,
   }) async {
-    return await repository.signIn(request: request);
+    return await repository.getUserData(request: request);
   }
 }

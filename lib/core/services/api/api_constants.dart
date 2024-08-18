@@ -26,4 +26,5 @@ class ApiUris {
   static String get signOut => '/api/auth/sign-out';
   static String get changePassword => '/api/auth/change-password';
   static String get forgetPassword => '/api/auth/forget-password';
+  static String get getUserData => '/api/auth/get-user-data';
 }

@@ -1,6 +1,10 @@
 import 'dart:async';
 
 import 'package:auhtify/Features/auth/data/datasources/auth_data_source.dart';
+import 'package:auhtify/Features/auth/data/responses/sign_in_response.dart';
+import 'package:auhtify/Features/auth/data/responses/sign_up_response.dart';
+import 'package:auhtify/Features/auth/domain/requests/get_user_data_request.dart';
+import 'package:auhtify/Features/auth/domain/requests/sign_out_request.dart';
 import 'package:auhtify/core/resources/errors/exceptions.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
@@ -76,7 +80,7 @@ class AuthRepositoryImplement implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, UserData>> signIn({
+  Future<Either<Failure, SignInResponse>> signIn({
     required SignInRequest request,
   }) async {
     try {
@@ -102,7 +106,7 @@ class AuthRepositoryImplement implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, UserData>> signUp({
+  Future<Either<Failure, SignUpResponse>> signUp({
     required SignUpRequest request,
   }) async {
     try {
@@ -150,6 +154,57 @@ class AuthRepositoryImplement implements AuthRepository {
     } catch (e) {
       return left(const AnonFailure());
       //
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserData>> getUserData({
+    required GetUserDataRequest request,
+  }) async {
+    try {
+      final response = await remoteDataSource.getUserData(request: request);
+      return right(response);
+      //
+    } on DioException catch (e) {
+      return left(ServerFailure(message: e.message));
+      //
+    } on TimeoutException {
+      return left(const TimeOutFailure());
+      //
+    } on ServerException {
+      return left(const ServerFailure());
+      //
+    } on AuthException catch (e) {
+      return left(AuthFailure(message: e.message));
+      //
+    } catch (e) {
+      return left(const AnonFailure());
+      //
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> signOut({
+    required SignOutRequest request,
+  }) async {
+    try {
+      final response = await remoteDataSource.signOut(request: request);
+      return right(response);
+      //
+    } on DioException catch (e) {
+      return left(ServerFailure(message: e.message));
+      //
+    } on TimeoutException {
+      return left(const TimeOutFailure());
+      //
+    } on ServerException {
+      return left(const ServerFailure());
+      //
+    } on AuthException catch (e) {
+      return left(AuthFailure(message: e.message));
+      //
+    } catch (e) {
+      return left(const AnonFailure());
     }
   }
 }
