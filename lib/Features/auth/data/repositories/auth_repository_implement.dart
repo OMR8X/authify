@@ -1,8 +1,13 @@
 import 'dart:async';
 
 import 'package:auhtify/Features/auth/data/datasources/auth_data_source.dart';
+import 'package:auhtify/Features/auth/data/responses/change_password_response.dart';
+import 'package:auhtify/Features/auth/data/responses/forget_password_response.dart';
+import 'package:auhtify/Features/auth/data/responses/get_user_data_response.dart';
 import 'package:auhtify/Features/auth/data/responses/sign_in_response.dart';
+import 'package:auhtify/Features/auth/data/responses/sign_out_response.dart';
 import 'package:auhtify/Features/auth/data/responses/sign_up_response.dart';
+import 'package:auhtify/Features/auth/data/responses/update_user_data_response.dart';
 import 'package:auhtify/Features/auth/domain/requests/get_user_data_request.dart';
 import 'package:auhtify/Features/auth/domain/requests/sign_out_request.dart';
 import 'package:auhtify/core/resources/errors/exceptions.dart';
@@ -27,12 +32,12 @@ class AuthRepositoryImplement implements AuthRepository {
   });
 
   @override
-  Future<Either<Failure, Unit>> changePassword({
+  Future<Either<Failure, ChangePasswordResponse>> changePassword({
     required ChangePasswordRequest request,
   }) async {
     try {
-      await remoteDataSource.changePassword(request: request);
-      return right(unit);
+      final response = await remoteDataSource.changePassword(request: request);
+      return right(response);
       //
     } on DioException catch (e) {
       return left(ServerFailure(message: e.message));
@@ -53,7 +58,7 @@ class AuthRepositoryImplement implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, Unit>> forgetPassword({
+  Future<Either<Failure, ForgetPasswordResponse>> forgetPassword({
     required ForgetPasswordRequest request,
   }) async {
     try {
@@ -132,7 +137,7 @@ class AuthRepositoryImplement implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, UserData>> updateUserData({
+  Future<Either<Failure, UpdateUserDataResponse>> updateUserData({
     required UpdateUserDataRequest request,
   }) async {
     try {
@@ -158,7 +163,7 @@ class AuthRepositoryImplement implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, UserData>> getUserData({
+  Future<Either<Failure, GetUserDataResponse>> getUserData({
     required GetUserDataRequest request,
   }) async {
     try {
@@ -184,7 +189,7 @@ class AuthRepositoryImplement implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, Unit>> signOut({
+  Future<Either<Failure, SignOutResponse>> signOut({
     required SignOutRequest request,
   }) async {
     try {

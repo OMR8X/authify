@@ -1,6 +1,11 @@
 import 'package:auhtify/Features/auth/data/models/user_data_model.dart';
+import 'package:auhtify/Features/auth/data/responses/change_password_response.dart';
+import 'package:auhtify/Features/auth/data/responses/forget_password_response.dart';
+import 'package:auhtify/Features/auth/data/responses/get_user_data_response.dart';
 import 'package:auhtify/Features/auth/data/responses/sign_in_response.dart';
+import 'package:auhtify/Features/auth/data/responses/sign_out_response.dart';
 import 'package:auhtify/Features/auth/data/responses/sign_up_response.dart';
+import 'package:auhtify/Features/auth/data/responses/update_user_data_response.dart';
 import 'package:auhtify/Features/auth/domain/entites/user_data.dart';
 import 'package:auhtify/Features/auth/domain/requests/change_password_request.dart';
 import 'package:auhtify/Features/auth/domain/requests/forget_password_request.dart';
@@ -24,7 +29,7 @@ class AuthRemoteDataSourceImplements implements AuthRemoteDataSource {
   AuthRemoteDataSourceImplements({required this.apiManager});
 
   @override
-  Future<Unit> changePassword({
+  Future<ChangePasswordResponse> changePassword({
     required ChangePasswordRequest request,
   }) async {
     //
@@ -36,19 +41,19 @@ class AuthRemoteDataSourceImplements implements AuthRemoteDataSource {
     ApiResponse apiResponse = ApiResponse.fromDioResponse(dioResponse);
     //
     if (apiResponse.hasError) {
-      throw AuthException(message: apiResponse.message);
+      throw AuthException(message: apiResponse.getMessage());
     }
     //
     if (dioResponse.statusCode == 200) {
       //
-      return unit;
+      return ChangePasswordResponse();
     }
     //
     throw const ServerException();
   }
 
   @override
-  Future<Unit> forgetPassword({
+  Future<ForgetPasswordResponse> forgetPassword({
     required ForgetPasswordRequest request,
   }) async {
     //
@@ -60,11 +65,11 @@ class AuthRemoteDataSourceImplements implements AuthRemoteDataSource {
     ApiResponse apiResponse = ApiResponse.fromDioResponse(dioResponse);
     //
     if (apiResponse.hasError) {
-      throw AuthException(message: apiResponse.message);
+      throw AuthException(message: apiResponse.getMessage());
     }
     //
     if (dioResponse.statusCode == 200) {
-      return unit;
+      return ForgetPasswordResponse();
     }
     //
     throw const ServerException();
@@ -83,7 +88,7 @@ class AuthRemoteDataSourceImplements implements AuthRemoteDataSource {
     ApiResponse apiResponse = ApiResponse.fromDioResponse(dioResponse);
     //
     if (apiResponse.hasError) {
-      throw AuthException(message: apiResponse.message);
+      throw AuthException(message: apiResponse.getMessage());
     }
     //
     if (dioResponse.statusCode == 200) {
@@ -109,7 +114,7 @@ class AuthRemoteDataSourceImplements implements AuthRemoteDataSource {
     ApiResponse apiResponse = ApiResponse.fromDioResponse(dioResponse);
     //
     if (apiResponse.hasError) {
-      throw AuthException(message: apiResponse.message);
+      throw AuthException(message: apiResponse.getMessage());
     }
     //
     if (dioResponse.statusCode == 200) {
@@ -123,7 +128,7 @@ class AuthRemoteDataSourceImplements implements AuthRemoteDataSource {
   }
 
   @override
-  Future<UserData> getUserData({
+  Future<GetUserDataResponse> getUserData({
     required GetUserDataRequest request,
   }) async {
     //
@@ -135,7 +140,7 @@ class AuthRemoteDataSourceImplements implements AuthRemoteDataSource {
     ApiResponse apiResponse = ApiResponse.fromDioResponse(dioResponse);
     //
     if (apiResponse.hasError) {
-      throw AuthException(message: apiResponse.message);
+      throw AuthException(message: apiResponse.getMessage());
     }
     //
     if (dioResponse.statusCode == 200) {
@@ -148,14 +153,14 @@ class AuthRemoteDataSourceImplements implements AuthRemoteDataSource {
         apiResponse.getData(key: 'token'),
       );
       //
-      return user;
+      return GetUserDataResponse.fromResponse(apiResponse);
     }
     //
     throw const ServerException();
   }
 
   @override
-  Future<Unit> signOut({required SignOutRequest request}) async {
+  Future<SignOutResponse> signOut({required SignOutRequest request}) async {
     //
     final dioResponse = await apiManager().post(
       ApiUris.signOut,
@@ -165,7 +170,7 @@ class AuthRemoteDataSourceImplements implements AuthRemoteDataSource {
     ApiResponse apiResponse = ApiResponse.fromDioResponse(dioResponse);
     //
     if (apiResponse.hasError) {
-      throw AuthException(message: apiResponse.message);
+      throw AuthException(message: apiResponse.getMessage());
     }
     //
     if (dioResponse.statusCode == 200) {
@@ -173,14 +178,14 @@ class AuthRemoteDataSourceImplements implements AuthRemoteDataSource {
       // delete token
       await TokenManager.instance.deleteToken();
       //
-      return unit;
+      return SignOutResponse();
     }
     //
     throw const ServerException();
   }
 
   @override
-  Future<UserData> updateUserData({
+  Future<UpdateUserDataResponse> updateUserData({
     required UpdateUserDataRequest request,
   }) async {
     //
@@ -192,16 +197,12 @@ class AuthRemoteDataSourceImplements implements AuthRemoteDataSource {
     ApiResponse apiResponse = ApiResponse.fromDioResponse(dioResponse);
     //
     if (apiResponse.hasError) {
-      throw AuthException(message: apiResponse.message);
+      throw AuthException(message: apiResponse.getMessage());
     }
     //
     if (dioResponse.statusCode == 200) {
       //
-      final user = UserDataModel.fromJson(
-        apiResponse.getData(key: "user"),
-      );
-      //
-      return user;
+      return UpdateUserDataResponse.fromResponse(apiResponse);
     }
     //
     throw const ServerException();

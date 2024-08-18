@@ -1,5 +1,10 @@
+import 'package:auhtify/Features/auth/data/responses/change_password_response.dart';
+import 'package:auhtify/Features/auth/data/responses/forget_password_response.dart';
+import 'package:auhtify/Features/auth/data/responses/get_user_data_response.dart';
 import 'package:auhtify/Features/auth/data/responses/sign_in_response.dart';
+import 'package:auhtify/Features/auth/data/responses/sign_out_response.dart';
 import 'package:auhtify/Features/auth/data/responses/sign_up_response.dart';
+import 'package:auhtify/Features/auth/data/responses/update_user_data_response.dart';
 import 'package:auhtify/Features/auth/domain/requests/get_user_data_request.dart';
 import 'package:auhtify/Features/auth/domain/requests/sign_out_request.dart';
 import 'package:dartz/dartz.dart';
@@ -13,11 +18,11 @@ import '../../domain/requests/update_user_data_request.dart';
 
 abstract class AuthRemoteDataSource {
   // change user password
-  Future<Unit> changePassword({
+  Future<ChangePasswordResponse> changePassword({
     required ChangePasswordRequest request,
   });
   // send code to user via email to reset password.
-  Future<Unit> forgetPassword({
+  Future<ForgetPasswordResponse> forgetPassword({
     required ForgetPasswordRequest request,
   });
   // signing in
@@ -29,16 +34,16 @@ abstract class AuthRemoteDataSource {
     required SignUpRequest request,
   });
   // update user data
-  Future<UserData> updateUserData({
+  Future<UpdateUserDataResponse> updateUserData({
     required UpdateUserDataRequest request,
   });
   // update user data
-  Future<Unit> signOut({
+  Future<SignOutResponse> signOut({
     required SignOutRequest request,
   });
   //
   // update user data
-  Future<UserData> getUserData({
+  Future<GetUserDataResponse> getUserData({
     required GetUserDataRequest request,
   });
 }

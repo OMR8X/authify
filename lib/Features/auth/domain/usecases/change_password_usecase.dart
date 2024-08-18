@@ -1,3 +1,4 @@
+import 'package:auhtify/Features/auth/data/responses/change_password_response.dart';
 import 'package:auhtify/Features/auth/domain/requests/change_password_request.dart';
 
 import '../../../../core/resources/errors/failures.dart';
@@ -11,7 +12,7 @@ class ChangePasswordUseCase {
 
   ChangePasswordUseCase({required this.repository});
 
-  Future<Either<Failure, Unit>> call({
+  Future<Either<Failure, ChangePasswordResponse>> call({
     required ChangePasswordRequest request,
   }) async {
     return await repository.changePassword(request: request);

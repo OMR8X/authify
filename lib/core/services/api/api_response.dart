@@ -30,6 +30,23 @@ class ApiResponse {
     return data?[key] ?? {};
   }
 
+  String getMessage() {
+    //
+    String details = message;
+    //
+    if (errors != null || errors != {}) {
+      //
+      details += ' : \n';
+      //
+      (errors ?? {}).forEach((key, value) {
+        details += (value as List).first;
+      });
+      //
+    }
+    //
+    return details;
+  }
+
   factory ApiResponse.fromDioResponse(Response response) {
     return ApiResponse(
       data: response.data["data"],

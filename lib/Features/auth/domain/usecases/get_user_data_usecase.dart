@@ -1,3 +1,4 @@
+import 'package:auhtify/Features/auth/data/responses/get_user_data_response.dart';
 import 'package:auhtify/Features/auth/domain/entites/user_data.dart';
 import 'package:auhtify/Features/auth/domain/requests/get_user_data_request.dart';
 
@@ -12,7 +13,7 @@ class GetUserDataUseCase {
 
   GetUserDataUseCase({required this.repository});
 
-  Future<Either<Failure, UserData>> call({
+  Future<Either<Failure, GetUserDataResponse>> call({
     required GetUserDataRequest request,
   }) async {
     return await repository.getUserData(request: request);

@@ -19,13 +19,18 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("everything ready"),
+            ButtonWidget(
+              title: "sign out",
+              onPressed: () {
+                context.read<AuthCubit>().signOut();
+              },
+            ),
           ],
         ),
       ),

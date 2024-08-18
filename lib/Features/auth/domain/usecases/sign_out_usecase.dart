@@ -1,3 +1,4 @@
+import 'package:auhtify/Features/auth/data/responses/sign_out_response.dart';
 import 'package:auhtify/Features/auth/domain/requests/change_password_request.dart';
 import 'package:auhtify/Features/auth/domain/requests/sign_out_request.dart';
 
@@ -12,7 +13,7 @@ class SignOutUseCase {
 
   SignOutUseCase({required this.repository});
 
-  Future<Either<Failure, Unit>> call({required SignOutRequest request}) async {
+  Future<Either<Failure, SignOutResponse>> call({required SignOutRequest request}) async {
     return await repository.signOut(request: request);
   }
 }

@@ -49,8 +49,10 @@ class AuthCubit extends Cubit<AuthState> {
       (l) {
         emit(AuthWelcome(message: l.message));
       },
-      (r) {
-        userData = r;
+      (r) async {
+        //
+        await TokenManager.instance.setToken(r.token);
+        //
         emit(const AuthDone());
       },
     );

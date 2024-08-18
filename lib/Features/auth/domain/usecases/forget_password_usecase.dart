@@ -1,3 +1,4 @@
+import 'package:auhtify/Features/auth/data/responses/forget_password_response.dart';
 import 'package:auhtify/Features/auth/domain/entites/user_data.dart';
 import 'package:auhtify/Features/auth/domain/requests/change_password_request.dart';
 
@@ -13,7 +14,7 @@ class ForgetPasswordUseCase {
 
   ForgetPasswordUseCase({required this.repository});
 
-  Future<Either<Failure, Unit>> call({
+  Future<Either<Failure, ForgetPasswordResponse>> call({
     required ForgetPasswordRequest request,
   }) async {
     return await repository.forgetPassword(request: request);
