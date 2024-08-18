@@ -26,9 +26,15 @@ class _HomeViewState extends State<HomeView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ButtonWidget(
+              title: "update password",
+              onPressed: () {
+                context.read<section>().showForgetPassword();
+              },
+            ),
+            ButtonWidget(
               title: "sign out",
               onPressed: () {
-                context.read<AuthCubit>().signOut();
+                context.read<section>().signOut();
               },
             ),
           ],

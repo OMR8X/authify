@@ -25,7 +25,7 @@ class TextFormFieldWidget extends StatefulWidget {
 }
 
 class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
-  bool obscureText = false;
+  bool obscureText = true;
   @override
   Widget build(BuildContext context) {
     return Padding(

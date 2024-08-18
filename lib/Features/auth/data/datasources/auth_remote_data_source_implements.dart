@@ -16,7 +16,7 @@ import 'package:auhtify/Features/auth/domain/requests/sign_up_request.dart';
 import 'package:auhtify/Features/auth/domain/requests/update_user_data_request.dart';
 import 'package:auhtify/core/services/api/api_constants.dart';
 import 'package:auhtify/core/resources/errors/exceptions.dart';
-import 'package:auhtify/core/services/api/api_response.dart';
+import 'package:auhtify/core/services/api/responses/api_response.dart';
 import 'package:auhtify/core/services/tokens/tokens_manager.dart';
 
 import 'package:dartz/dartz.dart';
@@ -46,7 +46,7 @@ class AuthRemoteDataSourceImplements implements AuthRemoteDataSource {
     //
     if (dioResponse.statusCode == 200) {
       //
-      return ChangePasswordResponse();
+      return ChangePasswordResponse.fromResponse(apiResponse);
     }
     //
     throw const ServerException();
@@ -69,7 +69,7 @@ class AuthRemoteDataSourceImplements implements AuthRemoteDataSource {
     }
     //
     if (dioResponse.statusCode == 200) {
-      return ForgetPasswordResponse();
+      return ForgetPasswordResponse.fromResponse(apiResponse);
     }
     //
     throw const ServerException();
@@ -178,7 +178,7 @@ class AuthRemoteDataSourceImplements implements AuthRemoteDataSource {
       // delete token
       await TokenManager.instance.deleteToken();
       //
-      return SignOutResponse();
+      return SignOutResponse.fromResponse(apiResponse);
     }
     //
     throw const ServerException();

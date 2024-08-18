@@ -47,7 +47,7 @@ class AuthifyApp extends StatelessWidget {
       ),
       home: MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => AuthCubit()),
+          BlocProvider(create: (context) => section()),
         ],
         child: const AuthViewsManager(),
       ),

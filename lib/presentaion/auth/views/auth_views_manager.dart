@@ -21,14 +21,14 @@ class AuthViewsManager extends StatefulWidget {
 class _AuthViewsManagerState extends State<AuthViewsManager> {
   @override
   void initState() {
-    context.read<AuthCubit>().init();
+    context.read<section>().init();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<AuthCubit>();
-    return BlocConsumer<AuthCubit, AuthState>(
+    final cubit = context.read<section>();
+    return BlocConsumer<section, AuthState>(
       listener: (context, state) {
         if (state.message != null) {
           Fluttertoast.showToast(
@@ -72,7 +72,7 @@ class _AuthViewsManagerState extends State<AuthViewsManager> {
           return ForgetPasswordView(
             state: state,
             onPressPop: () {
-              cubit.showWelcome();
+              cubit.init();
             },
             onResetPassword: cubit.forgetPassword,
           );
@@ -81,7 +81,7 @@ class _AuthViewsManagerState extends State<AuthViewsManager> {
             state: state,
             onChangePassword: cubit.changePassword,
             onPressPop: () {
-              cubit.showWelcome();
+              cubit.init();
             },
           );
         } else if (state is AuthDone) {

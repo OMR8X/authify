@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../../resources/errors/exceptions.dart';
+import '../../../resources/errors/exceptions.dart';
 
 class ApiResponse {
   //

@@ -19,12 +19,12 @@ import 'package:equatable/equatable.dart';
 
 part 'auth_views_manager_state.dart';
 
-class AuthCubit extends Cubit<AuthState> {
-  AuthCubit() : super(const AuthWelcome());
+class section extends Cubit<AuthState> {
+  section() : super(const AuthWelcome());
   //
   String? tempToken;
   //
-  late UserData userData;
+  UserData? userData;
   //
   init() async {
     //
@@ -38,6 +38,13 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   showHome() async {
+    //
+    // check if user is already signed in and there is user data
+    if (userData != null) {
+      emit(const AuthDone());
+      return;
+    }
+    //
     // get user token
     String token = (tempToken ?? await TokenManager.instance.getToken())!;
     // get user data
@@ -53,17 +60,22 @@ class AuthCubit extends Cubit<AuthState> {
         //
         await TokenManager.instance.setToken(r.token);
         //
+        injectUserData(r.user);
+        //
         emit(const AuthDone());
       },
     );
   }
 
-  injectUserData(UserData userData) {}
-  //
   showWelcome() {
     emit(const AuthWelcome());
   }
 
+  injectUserData(UserData userData) {
+    this.userData = userData;
+  }
+
+  //
   // sign up section
   showSignUp() {
     emit(const AuthSignUp());
@@ -89,12 +101,15 @@ class AuthCubit extends Cubit<AuthState> {
           tempToken = r.token;
         }
         //
+        injectUserData(r.user);
+        //
         emit(const AuthDone(message: "account created successfully"));
         //
       },
     );
   }
 
+  //
   // sign in section
   showSignIn() {
     emit(const AuthSignIn());
@@ -120,11 +135,14 @@ class AuthCubit extends Cubit<AuthState> {
           tempToken = r.token;
         }
         //
-        emit(const AuthDone(message: "logged in successfully"));
+        injectUserData(r.user);
+        //
+        emit(AuthDone(message: r.message));
       },
     );
   }
 
+  //
   // forget password section
   showForgetPassword() {
     emit(const AuthForgetPassword());
@@ -149,6 +167,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   //
+  // change password section
   showChangePassword() {
     emit(const AuthChangePassword());
   }
@@ -166,7 +185,10 @@ class AuthCubit extends Cubit<AuthState> {
         emit(AuthChangePassword(message: l.message));
       },
       (r) {
-        emit(const AuthSignIn(message: "password changed successfully"));
+        emit(
+          const AuthChangePassword(message: "password changed successfully"),
+        );
+        init();
       },
     );
   }
