@@ -190,7 +190,7 @@ class AuthRemoteDataSourceImplements implements AuthRemoteDataSource {
   }) async {
     //
     final dioResponse = await apiManager().post(
-      ApiUris.signIn,
+      ApiUris.updateUserData,
       body: request.toBody(),
     );
     //

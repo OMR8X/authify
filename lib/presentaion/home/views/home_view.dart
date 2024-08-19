@@ -4,6 +4,8 @@ import 'package:auhtify/presentaion/auth/state/auth_views_manager_cubit/auth_vie
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../testing.dart';
+
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
@@ -25,6 +27,15 @@ class _HomeViewState extends State<HomeView> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            ButtonWidget(
+              title: "testing download",
+              onPressed: () async {
+                FileDownloader().downloadFile(
+                  'http://127.0.0.1:8000/api/testing-download',
+                  'workfed.pdf',
+                );
+              },
+            ),
             ButtonWidget(
               title: "update password",
               onPressed: () {

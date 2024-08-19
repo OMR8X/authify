@@ -18,6 +18,7 @@ dependencies:
   fluttertoast: ^8.2.8
   get_it: ^7.7.0
   mocktail: ^1.0.4
+  path_provider: ^2.1.4
   pretty_dio_logger: ^1.4.0
 
 dev_dependencies:
