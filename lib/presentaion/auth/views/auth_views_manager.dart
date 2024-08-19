@@ -6,6 +6,7 @@ import 'package:auhtify/presentaion/auth/views/sign_in_view.dart';
 import 'package:auhtify/presentaion/auth/views/sign_up_view.dart';
 import 'package:auhtify/presentaion/auth/views/welcom_view.dart';
 import 'package:auhtify/presentaion/home/views/home_view.dart';
+import 'package:auhtify/presentaion/home/views/pages_holdart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -85,7 +86,7 @@ class _AuthViewsManagerState extends State<AuthViewsManager> {
             },
           );
         } else if (state is AuthDone) {
-          return const HomeView();
+          return const PagesHolder();
         } else {
           return const Scaffold(
             body: Center(
