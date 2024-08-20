@@ -1,4 +1,4 @@
-import 'package:auhtify/Features/auth/data/datasources/auth_data_source.dart';
+import 'package:auhtify/Features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:auhtify/Features/auth/data/datasources/auth_remote_data_source_implements.dart';
 import 'package:auhtify/Features/auth/data/repositories/auth_repository_implement.dart';
 import 'package:auhtify/Features/auth/domain/repositories/auth_repository.dart';
@@ -12,7 +12,6 @@ import 'package:auhtify/core/services/api/api_manager.dart';
 import '../../Features/auth/domain/usecases/get_user_data_usecase.dart';
 import '../../Features/auth/domain/usecases/sign_in_usecase.dart';
 import '../../Features/auth/domain/usecases/sign_out_usecase.dart';
-import '../services/api/api_client.dart';
 
 authInjection() async {
   await injectRepositories();

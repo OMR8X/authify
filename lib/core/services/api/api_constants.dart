@@ -4,7 +4,8 @@ class ApiSettings {
   static const sendTimeout = 15;
   static const connectTimeout = 15;
   //
-  static const baseUrl = 'https://authify.omr8x.com';
+  static const baseUrl = 'http://127.0.0.1:8000';
+  // static const baseUrl = 'https://authify.omr8x.com';
   //
 }
 
@@ -27,5 +28,7 @@ class ApiUris {
   static String get changePassword => '/api/auth/change-password';
   static String get forgetPassword => '/api/auth/forget-password';
   static String get getUserData => '/api/auth/get-user-data';
-  static String get updateUserData  => '/api/auth/update-user-data';
+  static String get updateUserData => '/api/auth/update-user-data';
+  static String downloadFile(String id) => '/api/files/downland?id=$id';
+  static String get uploadFile => '/api/files/downland';
 }

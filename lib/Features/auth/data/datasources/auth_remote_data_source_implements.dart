@@ -21,7 +21,7 @@ import 'package:auhtify/core/services/tokens/tokens_manager.dart';
 
 import 'package:dartz/dartz.dart';
 import '../../../../core/services/api/api_manager.dart';
-import 'auth_data_source.dart';
+import 'auth_remote_data_source.dart';
 
 class AuthRemoteDataSourceImplements implements AuthRemoteDataSource {
   final ApiManager apiManager;

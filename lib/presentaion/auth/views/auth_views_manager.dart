@@ -5,7 +5,6 @@ import 'package:auhtify/presentaion/auth/views/forget_password_view.dart';
 import 'package:auhtify/presentaion/auth/views/sign_in_view.dart';
 import 'package:auhtify/presentaion/auth/views/sign_up_view.dart';
 import 'package:auhtify/presentaion/auth/views/welcom_view.dart';
-import 'package:auhtify/presentaion/home/views/home_view.dart';
 import 'package:auhtify/presentaion/home/views/pages_holdart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

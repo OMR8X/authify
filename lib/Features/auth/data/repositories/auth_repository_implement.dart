@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:auhtify/Features/auth/data/datasources/auth_data_source.dart';
+import 'package:auhtify/Features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:auhtify/Features/auth/data/responses/change_password_response.dart';
 import 'package:auhtify/Features/auth/data/responses/forget_password_response.dart';
 import 'package:auhtify/Features/auth/data/responses/get_user_data_response.dart';

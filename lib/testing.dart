@@ -33,7 +33,7 @@ class FileDownloader {
       var raf = file.openSync(mode: FileMode.append);
 
       // Listen for data and write it to the file
-      int totalBytes = existingLength;
+      int totalBytes = existingLength; 
       int contentLength = int.parse(
           response.headers.value(HttpHeaders.contentLengthHeader) ?? '0');
 
@@ -43,7 +43,9 @@ class FileDownloader {
       }
 
       await for (var chunk in response.data.stream) {
+        print("chunk");
         raf.writeFromSync(chunk);
+        print(await raf.position());
         totalBytes += chunk.length as int;
 
         print(
@@ -51,12 +53,6 @@ class FileDownloader {
       }
 
       await raf.close();
-
-      if (totalBytes == contentLength) {
-        print("Download completed!");
-      } else {
-        print("Download paused or incomplete.");
-      }
     } catch (e) {
       print("Error during download: $e");
     }
