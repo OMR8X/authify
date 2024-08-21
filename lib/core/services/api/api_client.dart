@@ -1,5 +1,6 @@
 import 'package:auhtify/core/services/api/api_constants.dart';
 import 'package:auhtify/core/services/api/dio_factory.dart';
+import 'package:auhtify/core/services/tokens/tokens_manager.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -12,6 +13,7 @@ abstract class ApiClient {
     Map<String, dynamic>? headers,
     Map<String, dynamic> queryParameters = const {},
     ResponseType? responseType,
+    CancelToken? cancelToken,
   });
 
   /// post request
@@ -22,6 +24,8 @@ abstract class ApiClient {
     Map<String, dynamic>? headers,
     Map<String, dynamic> queryParameters = const {},
     ResponseType? responseType,
+    Function(int, int)? onSendProgress,
+    CancelToken? cancelToken,
   });
 
   /// update request
@@ -32,6 +36,7 @@ abstract class ApiClient {
     Map<String, dynamic>? headers,
     Map<String, dynamic> queryParameters = const {},
     ResponseType? responseType,
+    CancelToken? cancelToken,
   });
 
   /// delete request
@@ -42,6 +47,7 @@ abstract class ApiClient {
     Map<String, dynamic>? headers,
     Map<String, dynamic> queryParameters = const {},
     ResponseType? responseType,
+    CancelToken? cancelToken,
   });
 }
 
@@ -80,6 +86,7 @@ class DioClient implements ApiClient {
     Map<String, dynamic>? headers,
     Map<String, dynamic> queryParameters = const {},
     ResponseType? responseType,
+    CancelToken? cancelToken,
   }) async {
     final dio = _getDio(
       sendAuth: requireAuth,
@@ -99,6 +106,8 @@ class DioClient implements ApiClient {
     Map<String, dynamic>? headers,
     Map<String, dynamic> queryParameters = const {},
     ResponseType? responseType,
+    Function(int, int)? onSendProgress,
+    CancelToken? cancelToken,
   }) async {
     final dio = _getDio(
       sendAuth: requireAuth,
@@ -106,7 +115,12 @@ class DioClient implements ApiClient {
       params: queryParameters,
       responseType: responseType,
     );
-    final response = await dio.post(uri, data: body);
+    final response = await dio.post(
+      uri,
+      data: body,
+      onSendProgress: onSendProgress,
+      cancelToken: cancelToken,
+    );
     return response;
   }
 
@@ -118,6 +132,7 @@ class DioClient implements ApiClient {
     Map<String, dynamic>? headers,
     Map<String, dynamic> queryParameters = const {},
     ResponseType? responseType,
+    CancelToken? cancelToken,
   }) async {
     final dio = _getDio(
       sendAuth: requireAuth,
@@ -137,6 +152,7 @@ class DioClient implements ApiClient {
     Map<String, dynamic>? headers,
     Map<String, dynamic> queryParameters = const {},
     ResponseType? responseType,
+    CancelToken? cancelToken,
   }) async {
     final dio = _getDio(
       sendAuth: requireAuth,
@@ -158,6 +174,14 @@ class DioClient implements ApiClient {
     final Dio dio = _dioFactory();
     //
     options.headers = headers ?? defaultHeaders;
+    //
+    options.headers[ApiHeaders.headerAcceptKey] =
+        ApiHeaders.headerContentTypeJson;
+    //
+    if (sendAuth) {
+      final token = TokenManager.instance.token;
+      options.headers[ApiHeaders.headerAuthorizationKey] = "Bearer $token";
+    }
     // set passed parameters
     options.queryParameters = params ?? {};
     //

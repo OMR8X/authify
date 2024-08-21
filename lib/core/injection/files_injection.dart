@@ -6,6 +6,7 @@ import 'package:auhtify/core/services/api/api_manager.dart';
 import '../../Features/files/data/datasources/files_remote_datasource.dart';
 import '../../Features/files/data/datasources/files_remote_datasource_implements.dart';
 import '../../Features/files/domain/repository/files_repository.dart';
+import '../../Features/files/domain/usecases/upload_file_usecase.dart';
 
 filesInjection() async {
   await injectRepositories();
@@ -16,6 +17,11 @@ filesInjection() async {
 Future<void> injectUseCases() async {
   sl.registerFactory<DownloadFileUseCase>(
     () => DownloadFileUseCase(
+      repository: sl<FilesRepository>(),
+    ),
+  );
+  sl.registerFactory<UploadFileUseCase>(
+    () => UploadFileUseCase(
       repository: sl<FilesRepository>(),
     ),
   );

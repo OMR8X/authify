@@ -11,7 +11,7 @@ class UploadFileUseCase {
   UploadFileUseCase({
     required this.repository,
   });
-  Future<Either<Failure, UploadFileResponse>> call({
+  Future<Either<Failure, Unit>> call({
     required UploadFileRequest request,
   }) {
     return repository.uploadFile(request: request);

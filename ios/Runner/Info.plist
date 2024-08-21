@@ -12,6 +12,10 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>NSCameraUsageDescription</key>
+	<string>من اجل اضافة صور الى العرض التي ترغب بنشرة ، يرجى منح الاذن للوصول الى الكاميرا لاضافة الصور</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>من اجل اضافة صور الى العرض التي ترغب بنشرة ، يرجى اختيار صور من معرض الصور الخاص بك</string>	
 	<key>CFBundleName</key>
 	<string>auhtify</string>
 	<key>CFBundlePackageType</key>

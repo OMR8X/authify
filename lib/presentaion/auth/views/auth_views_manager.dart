@@ -21,14 +21,14 @@ class AuthViewsManager extends StatefulWidget {
 class _AuthViewsManagerState extends State<AuthViewsManager> {
   @override
   void initState() {
-    context.read<section>().init();
+    context.read<AuthCubit>().init();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<section>();
-    return BlocConsumer<section, AuthState>(
+    final cubit = context.read<AuthCubit>();
+    return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state.message != null) {
           Fluttertoast.showToast(

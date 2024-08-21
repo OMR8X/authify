@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io' as io;
 import 'package:auhtify/Features/files/domain/usecases/download_file_usecase.dart';
 import 'package:auhtify/core/injection/app_injection.dart';
+import 'package:dio/dio.dart';
 
 import '../../../Features/files/data/responses/download_file_response.dart';
 import '../../../Features/files/domain/requests/download_file_request.dart';
@@ -34,6 +35,7 @@ class DownloadOperation {
       fileId: fileId,
       controller: controller,
       filePath: path,
+      cancelToken: CancelToken(),
     );
 
     ///

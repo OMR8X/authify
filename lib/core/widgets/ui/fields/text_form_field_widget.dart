@@ -7,6 +7,7 @@ class TextFormFieldWidget extends StatefulWidget {
   const TextFormFieldWidget({
     super.key,
     required this.hintText,
+    this.initialValue,
     this.onSaved,
     this.validator,
     this.controller,
@@ -15,6 +16,7 @@ class TextFormFieldWidget extends StatefulWidget {
   });
   final TextEditingController? controller;
   final String hintText;
+  final String? initialValue;
   final void Function(String?)? onSaved;
   final String? Function(String?)? validator;
   final bool obscureText;
@@ -35,6 +37,7 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: TextFormField(
+            initialValue: widget.initialValue,
             controller: widget.controller,
             validator: widget.validator,
             obscureText: widget.obscureText && obscureText,

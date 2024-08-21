@@ -11,6 +11,8 @@ import 'package:auhtify/core/resources/styles/sizes_resources.dart';
 import 'package:auhtify/core/services/api/api_constants.dart';
 import 'package:auhtify/core/services/downloads/download_operation.dart';
 import 'package:auhtify/core/widgets/ui/fields/button_widget.dart';
+import 'package:auhtify/presentaion/files/views/downloads_view.dart';
+import 'package:auhtify/presentaion/files/views/uploads_view.dart';
 import 'package:auhtify/presentaion/home/views/settings_view.dart';
 import 'package:auhtify/testing.dart';
 import 'package:flutter/cupertino.dart';
@@ -49,6 +51,8 @@ class _PagesHolderState extends State<PagesHolder> {
         },
         children: const [
           FilesHomeView(),
+          DownloadsView(),
+          UploadsView(),
           SettingsView(),
         ],
       ),
@@ -77,7 +81,7 @@ class _PagesHolderState extends State<PagesHolder> {
                 ),
               ),
               IconButton(
-                onPressed: () async {
+                onPressed: () {
                   controller.animateToPage(
                     1,
                     duration: const Duration(milliseconds: 300),
@@ -85,8 +89,40 @@ class _PagesHolderState extends State<PagesHolder> {
                   );
                 },
                 icon: Image.asset(
-                  "assets/images/settings-icon.png",
+                  "assets/images/downloads-icon.png",
                   color: page == 1
+                      ? ColorsResources.whiteText
+                      : ColorsResources.lightGrey,
+                  height: 24,
+                ),
+              ),
+              IconButton(
+                onPressed: () {
+                  controller.animateToPage(
+                    2,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.decelerate,
+                  );
+                },
+                icon: Image.asset(
+                  "assets/images/uploads-icon.png",
+                  color: page == 2
+                      ? ColorsResources.whiteText
+                      : ColorsResources.lightGrey,
+                  height: 24,
+                ),
+              ),
+              IconButton(
+                onPressed: () async {
+                  controller.animateToPage(
+                    3,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.decelerate,
+                  );
+                },
+                icon: Image.asset(
+                  "assets/images/settings-icon.png",
+                  color: page == 3
                       ? ColorsResources.whiteText
                       : ColorsResources.lightGrey,
                   height: 24,

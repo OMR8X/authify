@@ -15,19 +15,22 @@ class FilesRepositoryImplement implements FilesRepository {
     required this.remoteDataSource,
   });
   @override
-  Future<Unit> downloadFile({
+  Future<Either<Failure, Unit>> downloadFile({
     required DownloadFileRequest request,
   }) async {
-    return await remoteDataSource.downloadFile(
+    var response = await remoteDataSource.downloadFile(
       request: request,
     );
+    return right(response);
   }
 
   @override
-  Future<Either<Failure, UploadFileResponse>> uploadFile({
+  Future<Either<Failure, Unit>> uploadFile({
     required UploadFileRequest request,
-  }) {
-    // TODO: implement uploadFile
-    throw UnimplementedError();
+  }) async {
+    var response = await remoteDataSource.uploadFile(
+      request: request,
+    );
+    return right(response);
   }
 }

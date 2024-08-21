@@ -1,18 +1,25 @@
+import 'dart:async';
 import 'dart:io';
+
+import 'package:auhtify/Features/files/data/responses/upload_file_response.dart';
+import 'package:dio/dio.dart';
 
 class UploadFileRequest {
   ///
   final File file;
 
   ///
-  final String fileName;
+  final StreamController<UploadFileResponse> controller;
 
   ///
-  final String fileId;
+  late StreamSubscription subscription;
+
+  ///
+  final CancelToken cancelToken;
 
   UploadFileRequest({
     required this.file,
-    required this.fileName,
-    required this.fileId,
+    required this.controller,
+    required this.cancelToken,
   });
 }

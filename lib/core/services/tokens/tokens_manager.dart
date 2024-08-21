@@ -1,6 +1,9 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class TokenManager {
+  //
+  static bool tempLog = false;
+  static String? _token;
   // Singleton instance of FlutterSecureStorage
   static const _storage = FlutterSecureStorage();
 
@@ -9,22 +12,34 @@ class TokenManager {
 
   static final TokenManager instance = TokenManager._privateConstructor();
 
-  // Get token
-  Future<String?> getToken() async {
+  String? get token => _token;
+  //
+  Future<String?> init() async {
     try {
-      return await _storage.read(key: "token");
+      final response = await _storage.read(key: "token");
+      _token = response ?? _token;
+      return response;
     } catch (e) {
       return null;
     }
   }
 
   // Set token
-  Future<void> setToken(String token) async {
-    await _storage.write(key: "token", value: token);
+  Future<void> setToken({
+    required String newToken,
+     bool tempLog=false,
+  }) async {
+    if (tempLog) {
+      _token = token;
+    } else {
+      _token = token;
+      await _storage.write(key: "token", value: token);
+    }
   }
 
   // Delete token
   Future<void> deleteToken() async {
+    _token = null;
     await _storage.delete(key: "token");
   }
 }

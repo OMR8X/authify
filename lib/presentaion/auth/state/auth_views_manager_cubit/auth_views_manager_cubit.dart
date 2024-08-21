@@ -19,10 +19,8 @@ import 'package:equatable/equatable.dart';
 
 part 'auth_views_manager_state.dart';
 
-class section extends Cubit<AuthState> {
-  section() : super(const AuthWelcome());
-  //
-  String? tempToken;
+class AuthCubit extends Cubit<AuthState> {
+  AuthCubit() : super(const AuthWelcome());
   //
   UserData? userData;
   //
@@ -30,7 +28,7 @@ class section extends Cubit<AuthState> {
     //
     emit(const AuthLoading());
     //
-    if ((tempToken ?? await TokenManager.instance.getToken()) != null) {
+    if (TokenManager.instance.token != null) {
       showHome();
     } else {
       showWelcome();
@@ -45,11 +43,10 @@ class section extends Cubit<AuthState> {
       return;
     }
     //
-    // get user token
-    String token = (tempToken ?? await TokenManager.instance.getToken())!;
+
     // get user data
     final response = await sl<GetUserDataUseCase>().call(
-      request: GetUserDataRequest(token: token),
+      request: GetUserDataRequest(),
     );
     //
     response.fold(
@@ -58,7 +55,7 @@ class section extends Cubit<AuthState> {
       },
       (r) async {
         //
-        await TokenManager.instance.setToken(r.token);
+        await TokenManager.instance.setToken(newToken: r.token);
         //
         injectUserData(r.user);
         //
@@ -96,9 +93,12 @@ class section extends Cubit<AuthState> {
       (r) async {
         //
         if (request.keepLoggedIn) {
-          await TokenManager.instance.setToken(r.token);
+          await TokenManager.instance.setToken(newToken: r.token);
         } else {
-          tempToken = r.token;
+          await TokenManager.instance.setToken(
+            newToken: r.token,
+            tempLog: true,
+          );
         }
         //
         injectUserData(r.user);
@@ -130,9 +130,12 @@ class section extends Cubit<AuthState> {
       (r) async {
         //
         if (request.keepLoggedIn) {
-          await TokenManager.instance.setToken(r.token);
+          await TokenManager.instance.setToken(newToken: r.token);
         } else {
-          tempToken = r.token;
+          await TokenManager.instance.setToken(
+            newToken: r.token,
+            tempLog: true,
+          );
         }
         //
         injectUserData(r.user);
@@ -199,10 +202,10 @@ class section extends Cubit<AuthState> {
     emit(const AuthLoading());
     //
     // get user token
-    String token = (tempToken ?? await TokenManager.instance.getToken())!;
+
     //
     final response = await sl<SignOutUseCase>().call(
-      request: SignOutRequest(token: token),
+      request: SignOutRequest(),
     );
     //
     response.fold(
@@ -210,7 +213,7 @@ class section extends Cubit<AuthState> {
         emit(AuthDone(message: l.message));
       },
       (r) {
-        tempToken = null;
+        TokenManager.instance.deleteToken();
         emit(const AuthWelcome(message: "logged out successfully"));
       },
     );

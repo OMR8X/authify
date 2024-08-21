@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
+import 'package:dio/dio.dart';
 
 import '../../data/responses/download_file_response.dart';
 
@@ -16,11 +16,14 @@ class DownloadFileRequest {
 
   ///
   late StreamSubscription subscription;
+  //
+  final CancelToken? cancelToken;
 
   ///
   DownloadFileRequest({
     required this.fileId,
     required this.controller,
     required this.filePath,
+    required this.cancelToken,
   });
 }

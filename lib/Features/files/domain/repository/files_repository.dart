@@ -8,12 +8,12 @@ import 'package:dartz/dartz.dart';
 
 abstract class FilesRepository {
   ///
-  Future<Either<Failure, UploadFileResponse>> uploadFile({
+  Future<Either<Failure, Unit>> uploadFile({
     required UploadFileRequest request,
   });
 
   ///
-  Future<Unit> downloadFile({
+  Future<Either<Failure, Unit>> downloadFile({
     required DownloadFileRequest request,
   });
 }

@@ -134,7 +134,7 @@ class AuthRemoteDataSourceImplements implements AuthRemoteDataSource {
     //
     final dioResponse = await apiManager().post(
       ApiUris.getUserData,
-      headers: request.toHeaders(),
+      requireAuth: true,
     );
     //
     ApiResponse apiResponse = ApiResponse.fromDioResponse(dioResponse);
@@ -144,14 +144,6 @@ class AuthRemoteDataSourceImplements implements AuthRemoteDataSource {
     }
     //
     if (dioResponse.statusCode == 200) {
-      //
-      final user = UserDataModel.fromJson(
-        apiResponse.getData(key: "user"),
-      );
-      // set token
-      await TokenManager.instance.setToken(
-        apiResponse.getData(key: 'token'),
-      );
       //
       return GetUserDataResponse.fromResponse(apiResponse);
     }
@@ -164,7 +156,7 @@ class AuthRemoteDataSourceImplements implements AuthRemoteDataSource {
     //
     final dioResponse = await apiManager().post(
       ApiUris.signOut,
-      headers: request.toHeaders(),
+      requireAuth: true,
     );
     //
     ApiResponse apiResponse = ApiResponse.fromDioResponse(dioResponse);
@@ -192,6 +184,7 @@ class AuthRemoteDataSourceImplements implements AuthRemoteDataSource {
     final dioResponse = await apiManager().post(
       ApiUris.updateUserData,
       body: request.toBody(),
+      requireAuth: true,
     );
     //
     ApiResponse apiResponse = ApiResponse.fromDioResponse(dioResponse);

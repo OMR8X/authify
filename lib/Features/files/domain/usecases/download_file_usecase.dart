@@ -11,7 +11,7 @@ class DownloadFileUseCase {
   DownloadFileUseCase({
     required this.repository,
   });
-  Future<Unit> call({
+    Future<Either<Failure, Unit>> call({
     required DownloadFileRequest request,
   }) {
     return repository.downloadFile(request: request);

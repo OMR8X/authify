@@ -1,9 +1,12 @@
 import 'package:dio/dio.dart';
 
 class UploadFileResponse {
-  final Response response;
-
+  final int total;
+  final int sent;
+  final double progress;
   UploadFileResponse({
-    required this.response,
+    required this.total,
+    required this.sent,
+    required this.progress,
   });
 }

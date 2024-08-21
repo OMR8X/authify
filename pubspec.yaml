@@ -9,7 +9,9 @@ dependencies:
   cupertino_icons: ^1.0.6
   dartz: ^0.10.1
   dio: ^5.5.0+1
+  dotted_border: ^2.1.0
   equatable: ^2.0.5
+  file_picker: ^8.0.5
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.6

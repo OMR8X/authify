@@ -1,10 +1,14 @@
 import 'package:auhtify/core/injection/app_injection.dart';
 import 'package:auhtify/core/resources/styles/colors_resources.dart';
+import 'package:auhtify/core/services/tokens/tokens_manager.dart';
 import 'package:auhtify/presentaion/auth/state/auth_views_manager_cubit/auth_views_manager_cubit.dart';
 import 'package:auhtify/presentaion/auth/views/auth_views_manager.dart';
+import 'package:auhtify/presentaion/files/state/cubit/testing_uploading_cubit.dart';
 import 'package:auhtify/testing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'presentaion/files/state/upload/upload_files_cubit.dart';
 
 void main() async {
   //
@@ -12,7 +16,7 @@ void main() async {
   //
   await appInjection();
   //
-
+  await TokenManager.instance.init();
   //
   runApp(const AuthifyApp());
 }
@@ -31,6 +35,10 @@ class AuthifyApp extends StatelessWidget {
         scaffoldBackgroundColor: ColorsResources.background,
         appBarTheme: const AppBarTheme(
           backgroundColor: ColorsResources.background,
+          titleTextStyle: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         inputDecorationTheme: InputDecorationTheme(
           hintStyle: const TextStyle(
@@ -50,7 +58,9 @@ class AuthifyApp extends StatelessWidget {
       ),
       home: MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => section()),
+          BlocProvider(create: (context) => AuthCubit()),
+          BlocProvider(create: (context) => UploadFilesCubit()),
+          BlocProvider(create: (context) => TestingUploadingCubit()),
         ],
         child: const AuthViewsManager(),
       ),

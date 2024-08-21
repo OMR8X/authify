@@ -1,5 +1,3 @@
-import 'package:auhtify/Features/files/data/responses/download_file_response.dart';
-import 'package:auhtify/Features/files/data/responses/upload_file_response.dart';
 import 'package:auhtify/Features/files/domain/requests/download_file_request.dart';
 import 'package:dartz/dartz.dart';
 
@@ -12,7 +10,7 @@ abstract class FilesRemoteDataSource {
   });
 
   ///
-  Future<UploadFileResponse> uploadFile({
+  Future<Unit> uploadFile({
     required UploadFileRequest request,
   });
 }

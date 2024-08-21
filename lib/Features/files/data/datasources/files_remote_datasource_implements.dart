@@ -18,10 +18,56 @@ class FilesRemoteDataSourceImplements extends FilesRemoteDataSource {
 
   FilesRemoteDataSourceImplements({required this.manager});
   @override
-  Future<UploadFileResponse> uploadFile({
+  Future<Unit> uploadFile({
     required UploadFileRequest request,
   }) async {
-    throw Exception();
+    try {
+      /// Prepare the file as a FormData object
+      FormData formData = FormData.fromMap({
+        "file": await MultipartFile.fromFile(
+          request.file.path,
+          filename: request.file.path.split("/").last,
+        ),
+        "name": request.file.path.split('/').last.split(".").first,
+      });
+
+      /// Prepare the headers
+      final headers = {
+        "Content-Type": "multipart/form-data",
+      };
+
+      /// Perform the HTTP POST request
+      Response response = await manager().post(
+        ApiUris.uploadFile,
+        requireAuth: true,
+        body: formData,
+        responseType: ResponseType.json,
+        headers: headers,
+        cancelToken: request.cancelToken,
+        onSendProgress: (int sent, int total) {
+          double progress = (sent / total) * 100;
+
+          request.controller.add(
+            UploadFileResponse(
+              total: total,
+              sent: sent,
+              progress: progress,
+            ),
+          );
+        },
+      );
+
+      /// Check the response status and parse the response
+      if (response.statusCode == 200) {
+        request.controller.close();
+        return unit;
+      } else {
+        throw Exception("Failed to upload file: ${response.statusCode}");
+      }
+    } catch (e) {
+      /// Handle errors
+      throw Exception("Error uploading file: $e");
+    }
   }
 
   @override
@@ -56,6 +102,7 @@ class FilesRemoteDataSourceImplements extends FilesRemoteDataSource {
       ApiUris.downloadFile(request.fileId),
       headers: headers,
       responseType: ResponseType.stream,
+      cancelToken: request.cancelToken,
     );
 
     /// get file full length
