@@ -21,7 +21,7 @@ class UploadFilesCubit extends Cubit<UploadFilesState> {
       return UploadFileOperation(
         file: e,
         name: e.path.split("/").last.split('.').first,
-      );
+      )..forward();
     }).toList();
     //
     operations += list;

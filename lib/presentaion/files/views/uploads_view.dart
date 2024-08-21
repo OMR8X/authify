@@ -1,6 +1,5 @@
 import 'package:auhtify/core/resources/styles/colors_resources.dart';
 import 'package:auhtify/core/resources/styles/sizes_resources.dart';
-import 'package:auhtify/presentaion/files/state/cubit/testing_uploading_cubit.dart';
 import 'package:auhtify/presentaion/files/state/upload/upload_files_cubit.dart';
 import 'package:auhtify/presentaion/files/views/pick_files_view.dart';
 import 'package:flutter/material.dart';

@@ -3,12 +3,14 @@ import 'package:auhtify/core/resources/styles/colors_resources.dart';
 import 'package:auhtify/core/services/tokens/tokens_manager.dart';
 import 'package:auhtify/presentaion/auth/state/auth_views_manager_cubit/auth_views_manager_cubit.dart';
 import 'package:auhtify/presentaion/auth/views/auth_views_manager.dart';
-import 'package:auhtify/presentaion/files/state/cubit/testing_uploading_cubit.dart';
+import 'package:auhtify/presentaion/files/state/explore/explore_files_cubit.dart';
 import 'package:auhtify/testing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'presentaion/files/state/download/download_files_cubit.dart';
 import 'presentaion/files/state/upload/upload_files_cubit.dart';
+import 'presentaion/files/views/files_home_view.dart';
 
 void main() async {
   //
@@ -60,7 +62,8 @@ class AuthifyApp extends StatelessWidget {
         providers: [
           BlocProvider(create: (context) => AuthCubit()),
           BlocProvider(create: (context) => UploadFilesCubit()),
-          BlocProvider(create: (context) => TestingUploadingCubit()),
+          BlocProvider(create: (context) => ExploreFilesCubit()),
+          BlocProvider(create: (context) => DownloadFilesCubit()),
         ],
         child: const AuthViewsManager(),
       ),

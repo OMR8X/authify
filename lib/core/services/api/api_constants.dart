@@ -31,4 +31,5 @@ class ApiUris {
   static String get updateUserData => '/api/auth/update-user-data';
   static String downloadFile(String id) => '/api/files/downland?id=$id';
   static String get uploadFile => '/api/files/upload';
+  static String get getAllFiles => '/api/files/get-files';
 }

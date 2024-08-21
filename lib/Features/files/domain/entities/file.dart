@@ -1,8 +1,8 @@
 class File {
   final int id;
-  final int name;
-  final int extension;
-  final int size;
+  final String name;
+  final String extension;
+  final double size;
 
   File({
     required this.id,

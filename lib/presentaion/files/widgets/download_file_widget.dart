@@ -1,18 +1,16 @@
-import 'dart:async';
-
-import 'package:auhtify/Features/files/domain/entities/upload_files_operation.dart';
-import 'package:auhtify/core/resources/styles/colors_resources.dart';
+import 'package:auhtify/Features/files/domain/entities/download_operation.dart';
 import 'package:flutter/material.dart';
 
-class UploadFileWidget extends StatelessWidget {
-  const UploadFileWidget({
+import '../../../Features/files/domain/entities/upload_files_operation.dart';
+import '../../../core/resources/styles/colors_resources.dart';
+
+class DownloadFileWidget extends StatelessWidget {
+  const DownloadFileWidget({
     super.key,
     required this.operation,
-    required this.onStartUplaod,
   });
 
-  final UploadFileOperation operation;
-  final VoidCallback onStartUplaod;
+  final DownloadOperation operation;
 
   @override
   Widget build(BuildContext context) {
@@ -49,14 +47,13 @@ class UploadFileWidget extends StatelessWidget {
               stream: operation.controller.stream.asBroadcastStream(),
               builder: (context, snapshot) {
                 final state = snapshot.connectionState;
-
                 return Column(
                   children: [
                     ///
                     Row(
                       children: [
                         Text(
-                          operation.name,
+                          operation.path.split('/').last,
                           style: const TextStyle(
                             fontSize: 12,
                           ),
@@ -74,16 +71,6 @@ class UploadFileWidget extends StatelessWidget {
                                 size: 12,
                               ),
                             ),
-
-                        if (state == ConnectionState.waiting)
-                          InkWell(
-                            onTap: onStartUplaod,
-                            child: const Icon(
-                              Icons.upload_file,
-                              color: ColorsResources.whiteText2,
-                              size: 20,
-                            ),
-                          ),
                       ],
                     ),
 
@@ -113,7 +100,7 @@ class UploadFileWidget extends StatelessWidget {
                         child: LinearProgressIndicator(
                           backgroundColor: ColorsResources.grey,
                           color: ColorsResources.primary,
-                          value: snapshot.data!.progress / 100,
+                          value: snapshot.data!.percent / 100,
                         ),
                       ),
 
@@ -124,7 +111,7 @@ class UploadFileWidget extends StatelessWidget {
                         children: [
                           ///
                           Text(
-                            "${(snapshot.data!.progress).toStringAsFixed(2)}%",
+                            "${(snapshot.data!.percent).toStringAsFixed(2)}%",
                             style: const TextStyle(
                               fontSize: 10,
                               color: ColorsResources.whiteText2,

@@ -1,10 +1,15 @@
 part of 'download_files_cubit.dart';
 
-sealed class DownloadFilesState extends Equatable {
-  const DownloadFilesState();
+final class DownloadFilesState extends Equatable {
+  ///
+  final List<DownloadOperation> operations;
 
+  ///
+  const DownloadFilesState({
+    this.operations = const [],
+  });
+
+  ///
   @override
-  List<Object> get props => [];
+  List<Object> get props => [operations];
 }
-
-final class DownloadFilesInitial extends DownloadFilesState {}

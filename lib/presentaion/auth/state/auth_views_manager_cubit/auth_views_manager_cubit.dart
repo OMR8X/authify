@@ -138,6 +138,8 @@ class AuthCubit extends Cubit<AuthState> {
           );
         }
         //
+        print(TokenManager.instance.token);
+        //
         injectUserData(r.user);
         //
         emit(AuthDone(message: r.message));

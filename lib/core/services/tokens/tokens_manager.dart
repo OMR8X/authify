@@ -27,12 +27,11 @@ class TokenManager {
   // Set token
   Future<void> setToken({
     required String newToken,
-     bool tempLog=false,
+    bool tempLog = false,
   }) async {
-    if (tempLog) {
-      _token = token;
-    } else {
-      _token = token;
+    _token = newToken;
+
+    if (!tempLog) {
       await _storage.write(key: "token", value: token);
     }
   }

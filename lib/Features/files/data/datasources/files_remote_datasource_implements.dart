@@ -4,8 +4,10 @@ import 'dart:typed_data';
 
 import 'package:auhtify/Features/files/data/datasources/files_remote_datasource.dart';
 import 'package:auhtify/Features/files/data/responses/download_file_response.dart';
+import 'package:auhtify/Features/files/data/responses/get_all_files_response.dart';
 import 'package:auhtify/Features/files/data/responses/upload_file_response.dart';
 import 'package:auhtify/Features/files/domain/requests/download_file_request.dart';
+import 'package:auhtify/Features/files/domain/requests/get_all_files_request.dart';
 import 'package:auhtify/core/services/api/api_constants.dart';
 import 'package:auhtify/core/services/api/api_manager.dart';
 import 'package:dartz/dartz.dart';
@@ -144,5 +146,42 @@ class FilesRemoteDataSourceImplements extends FilesRemoteDataSource {
 
     ///
     return unit;
+  }
+
+  @override
+  Future<GetAllFilesResponse> getAllFiles({
+    required GetAllFilesRequest request,
+  }) async {
+    ///
+    Map<String, dynamic> queryParameters = {};
+
+    ///
+    if (request.page != null) {
+      queryParameters['page'] = request.page;
+    }
+
+    ///
+    if (request.fileExtension != null) {
+      queryParameters['extension'] = request.fileExtension;
+    }
+
+    ///
+    if (request.search != null) {
+      queryParameters['search'] = request.search;
+    }
+
+    ///
+    if (request.perPage != null) {
+      queryParameters['per_page'] = request.perPage;
+    }
+
+    /// Perform the HTTP POST request
+    Response response = await manager().get(
+      ApiUris.getAllFiles,
+      requireAuth: true,
+      queryParameters: queryParameters,
+    );
+
+    return GetAllFilesResponse.fromJson(response.data);
   }
 }

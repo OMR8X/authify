@@ -1,15 +1,7 @@
-import 'dart:async';
-import 'dart:io';
 
-import 'package:auhtify/Features/files/data/datasources/files_remote_datasource.dart';
-import 'package:auhtify/Features/files/domain/requests/upload_file_request.dart';
-import 'package:auhtify/core/injection/app_injection.dart';
-import 'package:auhtify/core/resources/styles/colors_resources.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../Features/files/data/responses/upload_file_response.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});

@@ -4,12 +4,12 @@ import 'package:auhtify/Features/files/domain/usecases/download_file_usecase.dar
 import 'package:auhtify/core/injection/app_injection.dart';
 import 'package:dio/dio.dart';
 
-import '../../../Features/files/data/responses/download_file_response.dart';
-import '../../../Features/files/domain/requests/download_file_request.dart';
+import '../../data/responses/download_file_response.dart';
+import '../requests/download_file_request.dart';
 
 class DownloadOperation {
   ///
-  final int id;
+  final String name;
 
   ///
   final String path;
@@ -20,22 +20,28 @@ class DownloadOperation {
   ///
   late DownloadFileRequest request;
 
-  DownloadOperation({
-    required this.id,
-    required this.path,
-    required this.fileId,
-  });
+  late StreamController<DownloadFileResponse> controller;
 
   ///
-  Future<void> forward({
-    required StreamController<DownloadFileResponse> controller,
-  }) async {
+  late CancelToken cancelToken;
+
+  DownloadOperation({
+    required this.name,
+    required this.path,
+    required this.fileId,
+  }) {
+    cancelToken = CancelToken();
+    controller = StreamController<DownloadFileResponse>.broadcast();
+  }
+
+  ///
+  Future<void> forward() async {
     ///
     request = DownloadFileRequest(
       fileId: fileId,
       controller: controller,
       filePath: path,
-      cancelToken: CancelToken(),
+      cancelToken: cancelToken,
     );
 
     ///

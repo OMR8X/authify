@@ -1,26 +1,9 @@
-import 'dart:async';
-import 'dart:io';
-
-import 'package:auhtify/Features/files/data/datasources/files_remote_datasource.dart';
-import 'package:auhtify/Features/files/data/datasources/files_remote_datasource_implements.dart';
-import 'package:auhtify/Features/files/domain/requests/download_file_request.dart';
-import 'package:auhtify/Features/files/domain/usecases/download_file_usecase.dart';
-import 'package:auhtify/core/injection/app_injection.dart';
 import 'package:auhtify/core/resources/styles/colors_resources.dart';
-import 'package:auhtify/core/resources/styles/sizes_resources.dart';
-import 'package:auhtify/core/services/api/api_constants.dart';
-import 'package:auhtify/core/services/downloads/download_operation.dart';
-import 'package:auhtify/core/widgets/ui/fields/button_widget.dart';
 import 'package:auhtify/presentaion/files/views/downloads_view.dart';
 import 'package:auhtify/presentaion/files/views/uploads_view.dart';
 import 'package:auhtify/presentaion/home/views/settings_view.dart';
-import 'package:auhtify/testing.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:path_provider/path_provider.dart';
 
-import '../../../Features/files/data/responses/download_file_response.dart';
 import '../../files/views/files_home_view.dart';
 
 class PagesHolder extends StatefulWidget {
@@ -66,66 +49,86 @@ class _PagesHolderState extends State<PagesHolder> {
             children: [
               IconButton(
                 onPressed: () {
-                  controller.animateToPage(
-                    0,
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.decelerate,
-                  );
+                  controller.jumpToPage(0);
                 },
-                icon: Image.asset(
-                  "assets/images/search-icon.png",
-                  color: page == 0
-                      ? ColorsResources.whiteText
-                      : ColorsResources.lightGrey,
-                  height: 24,
+                icon: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    AnimatedScale(
+                      scale: page == 0 ? 1.2 : 0.9,
+                      duration: const Duration(milliseconds: 200),
+                      child: Image.asset(
+                        "assets/images/search-icon.png",
+                        color: page == 0
+                            ? ColorsResources.whiteText
+                            : ColorsResources.lightGrey,
+                        height: 19,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               IconButton(
                 onPressed: () {
-                  controller.animateToPage(
-                    1,
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.decelerate,
-                  );
+                  controller.jumpToPage(1);
                 },
-                icon: Image.asset(
-                  "assets/images/downloads-icon.png",
-                  color: page == 1
-                      ? ColorsResources.whiteText
-                      : ColorsResources.lightGrey,
-                  height: 24,
+                icon: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    AnimatedScale(
+                      scale: page == 1 ? 1.2 : 0.9,
+                      duration: const Duration(milliseconds: 200),
+                      child: Image.asset(
+                        "assets/images/downloads-icon.png",
+                        color: page == 1
+                            ? ColorsResources.whiteText
+                            : ColorsResources.lightGrey,
+                        height: 19,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               IconButton(
                 onPressed: () {
-                  controller.animateToPage(
-                    2,
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.decelerate,
-                  );
+                  controller.jumpToPage(2);
                 },
-                icon: Image.asset(
-                  "assets/images/uploads-icon.png",
-                  color: page == 2
-                      ? ColorsResources.whiteText
-                      : ColorsResources.lightGrey,
-                  height: 24,
+                icon: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    AnimatedScale(
+                      scale: page == 2 ? 1.2 : 0.9,
+                      duration: const Duration(milliseconds: 200),
+                      child: Image.asset(
+                        "assets/images/uploads-icon.png",
+                        color: page == 2
+                            ? ColorsResources.whiteText
+                            : ColorsResources.lightGrey,
+                        height: 19,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               IconButton(
-                onPressed: () async {
-                  controller.animateToPage(
-                    3,
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.decelerate,
-                  );
+                onPressed: () {
+                  controller.jumpToPage(3);
                 },
-                icon: Image.asset(
-                  "assets/images/settings-icon.png",
-                  color: page == 3
-                      ? ColorsResources.whiteText
-                      : ColorsResources.lightGrey,
-                  height: 24,
+                icon: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    AnimatedScale(
+                      scale: page == 3 ? 1.2 : 0.9,
+                      duration: const Duration(milliseconds: 200),
+                      child: Image.asset(
+                        "assets/images/settings-icon.png",
+                        color: page == 3
+                            ? ColorsResources.whiteText
+                            : ColorsResources.lightGrey,
+                        height: 19,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
